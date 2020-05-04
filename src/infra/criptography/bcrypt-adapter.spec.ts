@@ -19,4 +19,10 @@ describe('Name of the group', () => {
     await sut.encrypt('any_value')
     expect(hashSpy).toHaveBeenCalledWith('any_value', salt)
   })
+
+  test('should return a valid hash on hash success', async () => {
+    const sut = makeSut()
+    const hash = await sut.encrypt('any_hash')
+    expect(hash).toBe('hash')
+  })
 })
