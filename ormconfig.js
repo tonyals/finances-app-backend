@@ -56,7 +56,7 @@ module.exports = [
     synchronize: true,
     logging: true,
     entities: [
-      'src/infra/db/entities/**/*.ts'
+      'src/infra/db/postgres/entities/**/*.ts'
     ],
     migrations: [
       'src/migration/**/*.ts'
