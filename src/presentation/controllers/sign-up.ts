@@ -1,5 +1,7 @@
 import { Controller } from '../protocols/controller'
 import { HttpRequest, HttpResponse } from '../protocols/http'
+import { badRequest } from '../helpers/http-helper'
+import { MissingParamError } from '../errors/missing-param'
 
 export class SignUpController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -7,12 +9,7 @@ export class SignUpController implements Controller {
 
     for (const field of requiredFields) {
       if (!httpRequest.body[field]) {
-        return {
-          statusCode: 400,
-          body: {
-            error: 'Missing Param'
-          }
-        }
+        return badRequest(new MissingParamError(field))
       }
     }
 

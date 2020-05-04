@@ -1,4 +1,6 @@
 import { SignUpController } from './sign-up'
+import { badRequest } from '../helpers/http-helper'
+import { MissingParamError } from '../errors/missing-param'
 
 const makeSut = (): SignUpController => {
   return new SignUpController()
@@ -14,11 +16,6 @@ describe('SignUpController', () => {
         passwordConfirmation: 'any_password'
       }
     })
-    expect(httpResponse).toEqual({
-      statusCode: 400,
-      body: {
-        error: 'Missing Param'
-      }
-    })
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('name')))
   })
 })
