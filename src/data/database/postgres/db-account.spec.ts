@@ -7,7 +7,12 @@ import { Encrypter } from '../usecases/encrypter'
 const makeAccountPostgresStub = (): AccountRepository => {
   class AccountPostgresRepositoryStub implements AccountRepository {
     async addAccountRepository (accountData: AddAccountModel): Promise<AccountMondel> {
-      return new Promise(resolve => resolve(null))
+      return new Promise(resolve => resolve({
+        id: 1,
+        name: 'any_name',
+        email: 'any_mail',
+        password: 'hashed_password'
+      }))
     }
   }
   return new AccountPostgresRepositoryStub()
@@ -48,6 +53,21 @@ describe('DbAddAccount', () => {
     const addAccountRepositorSpy = jest.spyOn(addAccountRepositorStub, 'addAccountRepository')
     await sut.addAccount({ name: 'any_name', email: 'any_mail', password: 'any_password' })
     expect(addAccountRepositorSpy).toHaveBeenCalledWith({
+      name: 'any_name',
+      email: 'any_mail',
+      password: 'hashed_password'
+    })
+  })
+
+  test('should return an account if AddAccountRepository success', async () => {
+    const { sut } = makeSut()
+    const account = await sut.addAccount({
+      name: 'any_name',
+      email: 'any_mail',
+      password: 'any_password'
+    })
+    expect(account).toEqual({
+      id: 1,
       name: 'any_name',
       email: 'any_mail',
       password: 'hashed_password'
