@@ -36,6 +36,13 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbAddAccount', () => {
+  test('should call encrypter with correct password', async () => {
+    const { sut, encrypterStub } = makeSut()
+    const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
+    await sut.addAccount({ name: 'any_name', email: 'any_mail', password: 'any_password' })
+    expect(encryptSpy).toHaveBeenCalledWith('any_password')
+  })
+
   test('should call addAccountRepository with correct values', async () => {
     const { addAccountRepositorStub, sut } = makeSut()
     const addAccountRepositorSpy = jest.spyOn(addAccountRepositorStub, 'addAccountRepository')
@@ -43,14 +50,7 @@ describe('DbAddAccount', () => {
     expect(addAccountRepositorSpy).toHaveBeenCalledWith({
       name: 'any_name',
       email: 'any_mail',
-      password: 'any_password'
+      password: 'hashed_password'
     })
-  })
-
-  test('should call encrypter with correct password', async () => {
-    const { sut, encrypterStub } = makeSut()
-    const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
-    await sut.addAccount({ name: 'any_name', email: 'any_mail', password: 'any_password' })
-    expect(encryptSpy).toHaveBeenCalledWith('any_password')
   })
 })
