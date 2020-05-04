@@ -12,11 +12,11 @@ export class DbAccount implements AddAccount {
   async addAccount (accountData: AddAccountModel): Promise<AccountMondel> {
     const hashedPassword = await this.encrypt.encrypt(accountData.password)
     const { name, email } = accountData
-    await this.accountRepository.addAccountRepository({
+    const account = await this.accountRepository.addAccountRepository({
       name,
       email,
       password: hashedPassword
     })
-    return null
+    return account
   }
 }
