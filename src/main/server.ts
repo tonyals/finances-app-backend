@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { CreateConnectionPostgres } from '../infra/db/postgres/helpers/postgres-connect-helper'
 
 CreateConnectionPostgres.connect().then(async () => {

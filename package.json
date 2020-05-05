@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development sucrase-node src/main/server.ts",
+    "start": "NODE_ENV=development ts-node src/main/server.ts",
     "test": "NODE_ENV=tests jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "NODE_ENV=tests jest --passWithNoTests --runInBand",
     "test:unit": "NODE_ENV=tests yarn test jest --watch -c jest-unit-config.js",
@@ -42,6 +42,7 @@
     "sucrase": "^3.13.0",
     "supertest": "^4.0.2",
     "ts-jest": "^25.2.0",
+    "ts-node": "^8.10.1",
     "typescript": "^3.7.5"
   }
 }

@@ -35,7 +35,7 @@ module.exports = [
     dropSchema: true,
     logging: true,
     entities: [
-      'src/infra/db/entities/**/*.ts'
+      'src/infra/db/postgres/entities/**/*.ts'
     ],
     migrations: [
       'src/migration/**/*.ts'
@@ -44,7 +44,7 @@ module.exports = [
       'src/subscriber/**/*.ts'
     ],
     cli: {
-      entitiesDir: 'src/infra/db/entities',
+      entitiesDir: 'src/infra/db/postgres/entities/**/*.ts',
       migrationsDir: 'src/migration',
       subscribersDir: 'src/subscriber'
     }
