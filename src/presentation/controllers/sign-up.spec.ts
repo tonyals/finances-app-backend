@@ -166,6 +166,24 @@ describe('SignUpController', () => {
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
+  test('should call addAccount with correct values', async () => {
+    const { sut, addAccountStub } = makeSut()
+    const addAccountSpy = jest.spyOn(addAccountStub, 'addAccount')
+    await sut.handle({
+      body: {
+        name: 'any_name',
+        email: 'valid_mail@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    })
+    expect(addAccountSpy).toHaveBeenCalledWith({
+      name: 'any_name',
+      email: 'valid_mail@mail.com',
+      password: 'any_password'
+    })
+  })
+
   test('should return an account if addAccount success', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle({
