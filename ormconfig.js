@@ -32,7 +32,7 @@ module.exports = [
     password: 'docker',
     database: 'finances-dev',
     synchronize: true,
-    dropSchema: false,
+    dropSchema: true,
     logging: true,
     entities: [
       'src/infra/db/entities/**/*.ts'
