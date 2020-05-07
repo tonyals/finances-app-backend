@@ -1,11 +1,11 @@
 export enum OperationType {
-  DEBIT,
-  CREDIT
+  DEBIT = 'DEBIT',
+  CREDIT = 'CREDIT'
 }
 
-export interface OperationModel {
+export interface OperationCreditModel {
   id: number
-  type: OperationType
+  type: OperationType.CREDIT
   amount: number
   date: Date
   description: string

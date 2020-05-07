@@ -1,12 +1,12 @@
 import { DbOperation } from './db-operation'
-import { OperationRepository } from '../usecases/operation-repository'
-import { AddOperationModel } from '../../../domain/usecases/add-operation'
-import { OperationModel, OperationType } from '../../../domain/models/operation-model'
+import { CreditOperationRepository } from '../usecases/operation-repository'
+import { AddCreditOperationModel } from '../../../domain/usecases/add-operation'
+import { OperationType, OperationCreditModel } from '../../../domain/models/operation-model'
 import MockDate from 'mockdate'
 
-const makeOperationRepository = (): OperationRepository => {
-  class OperationRepositoryStub implements OperationRepository {
-    async addOperationRepository (operationData: AddOperationModel): Promise<OperationModel> {
+const makeOperationRepository = (): CreditOperationRepository => {
+  class OperationRepositoryStub implements CreditOperationRepository {
+    async addCreditOperationRepository (operationData: AddCreditOperationModel): Promise<OperationCreditModel> {
       return new Promise(resolve => resolve({
         id: 0,
         type: OperationType.CREDIT,
@@ -21,7 +21,7 @@ const makeOperationRepository = (): OperationRepository => {
 
 interface SutTypes {
   sut: DbOperation
-  operationRepositoryStub: OperationRepository
+  operationRepositoryStub: CreditOperationRepository
 }
 
 const makeSut = (): SutTypes => {
@@ -41,8 +41,8 @@ describe('DbOperation', () => {
 
   test('should call addOperationRepository with correct values', async () => {
     const { sut, operationRepositoryStub } = makeSut()
-    const addOperationSpy = jest.spyOn(operationRepositoryStub, 'addOperationRepository')
-    await sut.addOperation({
+    const addOperationSpy = jest.spyOn(operationRepositoryStub, 'addCreditOperationRepository')
+    await sut.addCreditOperation({
       type: OperationType.CREDIT,
       amount: 0,
       date: new Date(),
@@ -58,7 +58,7 @@ describe('DbOperation', () => {
 
   test('should addOperationRepository returns an CREDIT operation if add success', async () => {
     const { sut } = makeSut()
-    const operation = await sut.addOperation({
+    const operation = await sut.addCreditOperation({
       type: OperationType.CREDIT,
       amount: 0,
       date: new Date(),

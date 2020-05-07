@@ -1,6 +1,6 @@
-import { AddOperationModel } from '../../../domain/usecases/add-operation'
-import { OperationModel } from '../../../domain/models/operation-model'
+import { AddCreditOperationModel } from '../../../domain/usecases/add-operation'
+import { OperationCreditModel } from '../../../domain/models/operation-model'
 
-export interface OperationRepository {
-  addOperationRepository(operationData: AddOperationModel): Promise<OperationModel>
+export interface CreditOperationRepository {
+  addCreditOperationRepository(operationData: AddCreditOperationModel): Promise<OperationCreditModel>
 }
