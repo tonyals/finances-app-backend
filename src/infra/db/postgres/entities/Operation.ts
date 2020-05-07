@@ -9,7 +9,7 @@ export class Operation extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'enum', enum: OperationType, default: OperationType.CREDIT })
+  @Column({ type: 'enum', enum: OperationType, default: OperationType.CREDIT, nullable: false })
   type: OperationType;
 
   @Column({ type: 'money', nullable: false })
