@@ -160,6 +160,7 @@ describe('OperationController', () => {
       expect(httpResponse).toEqual(serverError(new Error()))
     })
   })
+
   describe('Operation Debit', () => {
     test('should call AddDebitOperation with correct values', async () => {
       const { sut, addDebitOperationStub } = makeSut()
@@ -178,6 +179,22 @@ describe('OperationController', () => {
         date: new Date(),
         description: 'any_description'
       })
+    })
+
+    test('should return 500 if addDebitOperation throws', async () => {
+      const { sut, addDebitOperationStub } = makeSut()
+      jest.spyOn(addDebitOperationStub, 'addDebitOperation').mockImplementationOnce(() => {
+        throw new Error()
+      })
+      const httpResponse = await sut.handle({
+        body: {
+          type: OperationType.DEBIT,
+          amount: 1,
+          date: new Date(),
+          description: 'any_description'
+        }
+      })
+      expect(httpResponse).toEqual(serverError(new Error()))
     })
   })
 })
