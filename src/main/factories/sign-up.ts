@@ -1,5 +1,5 @@
 import { Controller } from '../../presentation/protocols/controller'
-import { SignUpController } from '../../presentation/controllers/sign-up'
+import { SignUpController } from '../../presentation/controllers/login/sign-up'
 import { EmailValidatorAdapter } from '../../utils/email-validator-adapter'
 import { AccountPostgresRepository } from '../../infra/db/postgres/account/account-repository'
 import { DbAccount } from '../../data/database/postgres/db-account'
