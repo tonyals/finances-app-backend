@@ -108,4 +108,21 @@ describe('DbOperation', () => {
       description: 'any_description'
     })
   })
+
+  test('should addDebitOperationRepository returns an DEBIT operation if add success', async () => {
+    const { sut } = makeSut()
+    const operation = await sut.addDebitOperation({
+      type: OperationType.DEBIT,
+      amount: 0,
+      date: new Date(),
+      description: 'any_description'
+    })
+    expect(operation).toEqual({
+      id: 0,
+      type: OperationType.DEBIT,
+      amount: 0,
+      date: new Date(),
+      description: 'any_description'
+    })
+  })
 })
