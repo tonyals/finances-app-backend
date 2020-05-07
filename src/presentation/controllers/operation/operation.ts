@@ -3,9 +3,14 @@ import { HttpResponse, HttpRequest } from '../../protocols/http'
 import { MissingParamError } from '../../errors/missing-param'
 import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { AddCreditOperation } from '../../../domain/usecases/add-operation'
+import { AddDebitOperation } from '../../../domain/usecases/add-debit-operation'
+import { OperationType } from '../../../domain/models/operation-model'
 
 export class OperationController implements Controller {
-  constructor (private readonly addCreditOp: AddCreditOperation) {}
+  constructor (
+    private readonly addCreditOp: AddCreditOperation,
+    private readonly addDebitOp: AddDebitOperation
+  ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
@@ -16,8 +21,14 @@ export class OperationController implements Controller {
         }
       }
       const { type, amount, description, date } = httpRequest.body
-      const creditOperation = await this.addCreditOp.addCreditOperation({ type, amount, description, date })
-      return success(creditOperation)
+      if (type === OperationType.CREDIT) {
+        const creditOperation = await this.addCreditOp.addCreditOperation({ type, amount, description, date })
+        return success(creditOperation)
+      }
+      if (type === OperationType.DEBIT) {
+        const debitOperation = await this.addDebitOp.addDebitOperation({ type, amount, description, date })
+        return success(debitOperation)
+      }
     } catch (error) {
       return serverError(error)
     }
