@@ -2,8 +2,11 @@ import { Controller } from '../../protocols/controller'
 import { HttpResponse, HttpRequest } from '../../protocols/http'
 import { MissingParamError } from '../../errors/missing-param'
 import { badRequest } from '../../helpers/http-helper'
+import { AddCreditOperation } from '../../../domain/usecases/add-operation'
 
 export class OperationController implements Controller {
+  constructor (private readonly addCreditOp: AddCreditOperation) {}
+
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     const requiredFields = ['type', 'amount', 'date', 'description']
     for (const field of requiredFields) {
@@ -11,6 +14,8 @@ export class OperationController implements Controller {
         return badRequest(new MissingParamError(field))
       }
     }
+    const { type, amount, description, date } = httpRequest.body
+    await this.addCreditOp.addCreditOperation({ type, amount, description, date })
     return new Promise(resolve => resolve(null))
   }
 }
