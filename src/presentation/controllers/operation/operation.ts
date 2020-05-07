@@ -1,7 +1,7 @@
 import { Controller } from '../../protocols/controller'
 import { HttpResponse, HttpRequest } from '../../protocols/http'
 import { MissingParamError } from '../../errors/missing-param'
-import { badRequest } from '../../helpers/http-helper'
+import { badRequest, success } from '../../helpers/http-helper'
 import { AddCreditOperation } from '../../../domain/usecases/add-operation'
 
 export class OperationController implements Controller {
@@ -15,7 +15,7 @@ export class OperationController implements Controller {
       }
     }
     const { type, amount, description, date } = httpRequest.body
-    await this.addCreditOp.addCreditOperation({ type, amount, description, date })
-    return new Promise(resolve => resolve(null))
+    const creditOperation = await this.addCreditOp.addCreditOperation({ type, amount, description, date })
+    return success(creditOperation)
   }
 }
