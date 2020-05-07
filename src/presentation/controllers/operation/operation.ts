@@ -5,6 +5,7 @@ import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { AddCreditOperation } from '../../../domain/usecases/add-operation'
 import { AddDebitOperation } from '../../../domain/usecases/add-debit-operation'
 import { OperationType } from '../../../domain/models/operation-model'
+import { InvalidParamError } from '../../errors/invalid-param'
 
 export class OperationController implements Controller {
   constructor (
@@ -21,13 +22,18 @@ export class OperationController implements Controller {
         }
       }
       const { type, amount, description, date } = httpRequest.body
-      if (type === OperationType.CREDIT) {
-        const creditOperation = await this.addCreditOp.addCreditOperation({ type, amount, description, date })
-        return success(creditOperation)
-      }
-      if (type === OperationType.DEBIT) {
-        const debitOperation = await this.addDebitOp.addDebitOperation({ type, amount, description, date })
-        return success(debitOperation)
+
+      switch (type) {
+        case OperationType.CREDIT: {
+          const creditOperation = await this.addCreditOp.addCreditOperation({ type, amount, description, date })
+          return success(creditOperation)
+        }
+        case OperationType.DEBIT: {
+          const debitOperation = await this.addDebitOp.addDebitOperation({ type, amount, description, date })
+          return success(debitOperation)
+        }
+        default:
+          return badRequest(new InvalidParamError('operation-type'))
       }
     } catch (error) {
       return serverError(error)

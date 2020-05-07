@@ -54,7 +54,7 @@ module.exports = [
     type: 'sqlite',
     database: './tests.sqlite',
     synchronize: true,
-    logging: true,
+    logging: false,
     entities: [
       'src/infra/db/postgres/entities/**/*.ts'
     ],
