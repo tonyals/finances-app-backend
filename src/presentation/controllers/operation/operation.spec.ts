@@ -1,5 +1,5 @@
 import { OperationController } from './operation'
-import { badRequest, success } from '../../helpers/http-helper'
+import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { OperationType, OperationCreditModel } from '../../../domain/models/operation-model'
 import { AddCreditOperation, AddCreditOperationModel } from '../../../domain/usecases/add-operation'
@@ -124,5 +124,21 @@ describe('OperationController', () => {
       date: new Date(),
       description: 'any_description'
     }))
+  })
+
+  test('should return 500 if addCreditOperation throws', async () => {
+    const { sut, addCreditOperationStub } = makeSut()
+    jest.spyOn(addCreditOperationStub, 'addCreditOperation').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpResponse = await sut.handle({
+      body: {
+        type: OperationType.CREDIT,
+        amount: 1,
+        date: new Date(),
+        description: 'any_description'
+      }
+    })
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
