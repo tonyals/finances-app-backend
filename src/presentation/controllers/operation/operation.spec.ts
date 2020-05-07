@@ -48,4 +48,16 @@ describe('OperationController', () => {
     })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('date')))
   })
+
+  test('should return 400 if no description is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({
+      body: {
+        type: OperationType.CREDIT,
+        amount: 1,
+        date: new Date()
+      }
+    })
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('description')))
+  })
 })
