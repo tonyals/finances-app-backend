@@ -16,7 +16,7 @@ export class DbOperation implements AddCreditOperation, AddDebitOperation {
   }
 
   async addDebitOperation (operationData: AddDebitOperationModel): Promise<OperationDebitModel> {
-    await this.debitOperationRepository.addDebitOperationRepository(operationData)
-    return new Promise(resolve => resolve(null))
+    const debitOperation = await this.debitOperationRepository.addDebitOperationRepository(operationData)
+    return debitOperation
   }
 }
