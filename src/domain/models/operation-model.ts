@@ -1,6 +1,6 @@
-export interface OperationType {
-  DEBIT: string
-  CREDIT: string
+export enum OperationType {
+  DEBIT,
+  CREDIT
 }
 
 export interface OperationModel {
