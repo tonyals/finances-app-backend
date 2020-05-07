@@ -1,9 +1,19 @@
 import { CreateConnectionPostgres } from '../helpers/postgres-connect-helper'
 import { AccountPostgresRepository } from './account-repository'
+import { User } from '../entities/User'
+import { getConnection } from 'typeorm'
 
 describe('AccountPostgresRepository', () => {
   beforeAll(async () => {
     await CreateConnectionPostgres.connect()
+  })
+
+  beforeEach(async () => {
+    await User.delete({})
+  })
+
+  afterAll(() => {
+    return getConnection(process.env.NODE_ENV).close
   })
 
   test('should return an account on addAccountRepository success', async () => {
