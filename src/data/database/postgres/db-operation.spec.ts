@@ -55,4 +55,21 @@ describe('DbOperation', () => {
       description: 'any_description'
     })
   })
+
+  test('should addOperationRepository returns an CREDIT operation if add success', async () => {
+    const { sut } = makeSut()
+    const operation = await sut.addOperation({
+      type: OperationType.CREDIT,
+      amount: 0,
+      date: new Date(),
+      description: 'any_description'
+    })
+    expect(operation).toEqual({
+      id: 0,
+      type: OperationType.CREDIT,
+      amount: 0,
+      date: new Date(),
+      description: 'any_description'
+    })
+  })
 })
