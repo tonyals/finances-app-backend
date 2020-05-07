@@ -5,6 +5,7 @@ import { OperationType, OperationCreditModel, OperationDebitModel } from '../../
 import { AddCreditOperation, AddCreditOperationModel } from '../../../domain/usecases/add-operation'
 import MockDate from 'mockdate'
 import { AddDebitOperation, AddDebitOperationModel } from '../../../domain/usecases/add-debit-operation'
+import { InvalidParamError } from '../../errors/invalid-param'
 
 const makeAddCreditOperation = (): AddCreditOperation => {
   class AddCreditOperationStub implements AddCreditOperation {
@@ -69,6 +70,20 @@ describe('OperationController', () => {
     })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('type')))
   })
+
+  test('should return 400 if type operation invalid is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({
+      body: {
+        type: 'any_type',
+        amount: 1,
+        date: new Date(),
+        description: 'any_description'
+      }
+    })
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('operation-type')))
+  })
+
   describe('Operation Credit', () => {
     test('should return 400 if no amount is provided', async () => {
       const { sut } = makeSut()
