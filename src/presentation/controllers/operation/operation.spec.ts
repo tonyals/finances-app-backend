@@ -17,7 +17,7 @@ describe('OperationController', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle({
       body: {
-        amount: 0,
+        amount: 1,
         date: new Date(),
         description: 'any_description'
       }
@@ -35,5 +35,17 @@ describe('OperationController', () => {
       }
     })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('amount')))
+  })
+
+  test('should return 400 if no date is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({
+      body: {
+        type: OperationType.CREDIT,
+        amount: 1,
+        description: 'any_description'
+      }
+    })
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('date')))
   })
 })
