@@ -1,5 +1,5 @@
 import { OperationController } from './operation'
-import { badRequest } from '../../helpers/http-helper'
+import { badRequest, success } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { OperationType, OperationCreditModel } from '../../../domain/models/operation-model'
 import { AddCreditOperation, AddCreditOperationModel } from '../../../domain/usecases/add-operation'
@@ -105,5 +105,24 @@ describe('OperationController', () => {
       date: new Date(),
       description: 'any_description'
     })
+  })
+
+  test('should return an creditOperation if addCreditOperation success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({
+      body: {
+        type: OperationType.CREDIT,
+        amount: 1,
+        date: new Date(),
+        description: 'any_description'
+      }
+    })
+    expect(httpResponse).toEqual(success({
+      id: 1,
+      type: OperationType.CREDIT,
+      amount: 1,
+      date: new Date(),
+      description: 'any_description'
+    }))
   })
 })
