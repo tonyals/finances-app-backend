@@ -1,6 +1,6 @@
-import { AddCreditOperationModel, AddCreditOperation } from '../../../domain/usecases/add-operation'
+import { AddCreditOperationModel, AddCreditOperation } from '../../../domain/usecases/add-credit-operation'
 import { OperationCreditModel, OperationDebitModel } from '../../../domain/models/operation-model'
-import { CreditOperationRepository } from '../usecases/operation-repository'
+import { CreditOperationRepository } from '../usecases/credit-operation-repository'
 import { AddDebitOperation, AddDebitOperationModel } from '../../../domain/usecases/add-debit-operation'
 import { DebitOperationRepository } from '../usecases/debit-operation-repository'
 

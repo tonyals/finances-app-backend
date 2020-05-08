@@ -1,6 +1,6 @@
 import { DbOperation } from './db-operation'
-import { CreditOperationRepository } from '../usecases/operation-repository'
-import { AddCreditOperationModel } from '../../../domain/usecases/add-operation'
+import { CreditOperationRepository } from '../usecases/credit-operation-repository'
+import { AddCreditOperationModel } from '../../../domain/usecases/add-credit-operation'
 import { OperationType, OperationCreditModel, OperationDebitModel } from '../../../domain/models/operation-model'
 import MockDate from 'mockdate'
 import { DebitOperationRepository } from '../usecases/debit-operation-repository'

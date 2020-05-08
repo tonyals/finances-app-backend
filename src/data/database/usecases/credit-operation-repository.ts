@@ -1,4 +1,4 @@
-import { AddCreditOperationModel } from '../../../domain/usecases/add-operation'
+import { AddCreditOperationModel } from '../../../domain/usecases/add-credit-operation'
 import { OperationCreditModel } from '../../../domain/models/operation-model'
 
 export interface CreditOperationRepository {
