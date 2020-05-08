@@ -18,7 +18,7 @@ export class DbFinancialReportsOperation implements SumAllOperation, FinancialRe
   }
 
   async financialResult (): Promise<FinancialResultModel> {
-    await this.financialResultOpRepository.financialResult()
-    return new Promise(resolve => resolve(null))
+    const financialResult = await this.financialResultOpRepository.financialResult()
+    return financialResult
   }
 }
