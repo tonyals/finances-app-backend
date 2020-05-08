@@ -27,4 +27,16 @@ describe('Operation Repository', () => {
     expect(operationCredit).toBeTruthy()
     expect(operationCredit.id).toBeTruthy()
   })
+
+  test('should return an DebitOperation if addOperationDebit success', async () => {
+    const sut = new OperationPostgresRepository()
+    const operationDebit = await sut.addDebitOperationRepository({
+      type: OperationType.DEBIT,
+      amount: 0,
+      date: new Date(),
+      description: 'any_description'
+    })
+    expect(operationDebit).toBeTruthy()
+    expect(operationDebit.id).toBeTruthy()
+  })
 })
