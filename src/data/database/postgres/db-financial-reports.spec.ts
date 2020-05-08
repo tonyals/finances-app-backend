@@ -48,7 +48,7 @@ describe('DbFinancialReports', () => {
     expect(sumSpy).toHaveBeenCalledWith('CREDIT')
   })
 
-  test('should sumAllDebitsOpRepository returns DEBIT operations on success', async () => {
+  test('should sumAllOpRepository returns DEBIT operations on success', async () => {
     const { sut } = makeSut()
     const debitOperation = await sut.sumAllOperation(OperationType.DEBIT)
     expect(debitOperation).toEqual({
@@ -56,6 +56,22 @@ describe('DbFinancialReports', () => {
         {
           id: 1,
           type: OperationType.DEBIT,
+          description: 'any_description',
+          amount: 1
+        }
+      ],
+      sum: 2
+    })
+  })
+
+  test('should sumAllOpRepository returns CREDIT operations on success', async () => {
+    const { sut } = makeSut()
+    const creditOperation = await sut.sumAllOperation(OperationType.CREDIT)
+    expect(creditOperation).toEqual({
+      operation: [
+        {
+          id: 1,
+          type: OperationType.CREDIT,
           description: 'any_description',
           amount: 1
         }
