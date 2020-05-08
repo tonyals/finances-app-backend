@@ -61,15 +61,26 @@ describe('ReportsController', () => {
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('operation-type')))
   })
 
-  test('should call sumAllDebitsOperation with correct value', async () => {
+  test('should call sumAllOperation with DEBIT value', async () => {
     const { sut, sumAllStub } = makeSut()
-    const sumAllDebitsOperationSpy = jest.spyOn(sumAllStub, 'sumAllOperation')
+    const sumAllOperationSpy = jest.spyOn(sumAllStub, 'sumAllOperation')
     await sut.handle({
       body: {
         type: OperationType.DEBIT
       }
     })
-    expect(sumAllDebitsOperationSpy).toHaveBeenCalledWith(OperationType.DEBIT)
+    expect(sumAllOperationSpy).toHaveBeenCalledWith(OperationType.DEBIT)
+  })
+
+  test('should call sumAllOperation with CREDIT value', async () => {
+    const { sut, sumAllStub } = makeSut()
+    const sumAllOperationSpy = jest.spyOn(sumAllStub, 'sumAllOperation')
+    await sut.handle({
+      body: {
+        type: OperationType.CREDIT
+      }
+    })
+    expect(sumAllOperationSpy).toHaveBeenCalledWith(OperationType.CREDIT)
   })
 
   test('should return 500 if sumAllDebitsOperation throws', async () => {
