@@ -1,7 +1,7 @@
 import { DbFinancialReportsOperation } from './db-financial-reports'
 import { SumAllOperationRepository } from '../usecases/sum-debits-repository'
 import { OperationType } from '../../../domain/models/operation-enum'
-import { SumAllModel } from '../../../domain/models/sum-debits-model'
+import { SumAllModel } from '../../../domain/models/sum-all-model'
 
 interface SutTypes {
   sut: DbFinancialReportsOperation

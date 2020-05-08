@@ -3,7 +3,7 @@ import { HttpResponse, HttpRequest } from '../../protocols/http'
 import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { OperationType } from '../../../domain/models/operation-enum'
-import { SumAllOperation } from '../../../domain/usecases/sum-debits'
+import { SumAllOperation } from '../../../domain/usecases/sum-all'
 import { InvalidParamError } from '../../errors/invalid-param'
 
 export class FinancialReportsController implements Controller {

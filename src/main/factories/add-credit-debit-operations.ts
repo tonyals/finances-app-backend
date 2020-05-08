@@ -1,4 +1,4 @@
-import { OperationController } from '../../presentation/controllers/operation/operation'
+import { OperationController } from '../../presentation/controllers/add-credit-debit-operation/cred-deb-operation-controller'
 import { DbOperation } from '../../data/database/postgres/db-operation'
 import { OperationPostgresRepository } from '../../infra/db/postgres/operation/operation-repository'
 import { Controller } from '../../presentation/protocols/controller'

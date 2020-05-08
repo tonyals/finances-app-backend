@@ -1,4 +1,4 @@
-import { OperationController } from './operation'
+import { OperationController } from './cred-deb-operation-controller'
 import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { OperationCreditModel, OperationDebitModel } from '../../../domain/models/operation-model'

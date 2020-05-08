@@ -1,8 +1,8 @@
 import { FinancialReportsController } from './reports-controller'
 import { badRequest, serverError, success } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
-import { SumAllOperation } from '../../../domain/usecases/sum-debits'
-import { SumAllModel } from '../../../domain/models/sum-debits-model'
+import { SumAllOperation } from '../../../domain/usecases/sum-all'
+import { SumAllModel } from '../../../domain/models/sum-all-model'
 import { OperationType } from '../../../domain/models/operation-enum'
 import { InvalidParamError } from '../../errors/invalid-param'
 
