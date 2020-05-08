@@ -8,9 +8,7 @@ import { OperationType } from '../../domain/models/operation-enum'
 describe('Operation route', () => {
   beforeAll(async () => {
     await CreateConnectionPostgres.connect()
-  })
 
-  beforeEach(async () => {
     await Operation.create({
       type: OperationType.DEBIT,
       amount: 2.85,
@@ -19,7 +17,7 @@ describe('Operation route', () => {
     }).save()
 
     await Operation.create({
-      type: OperationType.DEBIT,
+      type: OperationType.CREDIT,
       amount: 3.5,
       date: new Date(),
       description: 'any_description'
@@ -45,15 +43,30 @@ describe('Operation route', () => {
               type: 'DEBIT',
               description: 'any_description',
               amount: 2.85
-            },
+            }
+          ],
+          sum: 2.85
+        }
+      )
+  })
+
+  test('should return an operation CREDIT on success', async () => {
+    await request(app)
+      .get('/api/reports')
+      .send({
+        type: 'CREDIT'
+      })
+      .expect(
+        {
+          operation: [
             {
               id: 2,
-              type: 'DEBIT',
+              type: 'CREDIT',
               description: 'any_description',
               amount: 3.5
             }
           ],
-          sum: 6.35
+          sum: 3.5
         }
       )
   })
