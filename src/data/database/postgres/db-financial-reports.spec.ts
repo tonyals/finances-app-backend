@@ -105,5 +105,15 @@ describe('DbFinancialReports', () => {
       await sut.financialResult()
       expect(financialResultSpy).toHaveBeenCalled()
     })
+
+    test('should financialResult returns financial result', async () => {
+      const { sut } = makeSut()
+      const financialResult = await sut.financialResult()
+      expect(financialResult).toEqual({
+        sumDebits: 25,
+        sumCredits: 50,
+        result: 25
+      })
+    })
   })
 })
