@@ -9,7 +9,7 @@ export class DbFinancialReportsOperation implements SumAllDebitsOperation {
   ) {}
 
   async sumAllDebitsOperation (type: OperationType.DEBIT): Promise<SumAllDebitsModel> {
-    await this.sumAllDebitsOpRepository.sumAllDebitsOperationRepository(type)
-    return new Promise(resolve => resolve(null))
+    const debitOperation = await this.sumAllDebitsOpRepository.sumAllDebitsOperationRepository(type)
+    return debitOperation
   }
 }
