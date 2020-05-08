@@ -4,6 +4,16 @@ export enum OperationType {
   DEBIT = 'DEBIT',
   CREDIT = 'CREDIT'
 }
+/// ColumnNumericTransformer
+export class ColumnNumericTransformer {
+  to (data: number): number {
+    return data
+  }
+
+  from (data: string): number {
+    return parseFloat(data)
+  }
+}
 
 @Entity()
 export class Operation extends BaseEntity {
@@ -13,7 +23,7 @@ export class Operation extends BaseEntity {
   @Column({ type: 'enum', enum: OperationType, nullable: false })
   type: OperationType;
 
-  @Column({ type: 'real', nullable: false })
+  @Column({ type: 'numeric', transformer: new ColumnNumericTransformer(), nullable: false })
   amount: number;
 
   @Column({ type: 'date', nullable: false })
