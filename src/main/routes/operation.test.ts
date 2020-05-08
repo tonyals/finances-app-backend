@@ -7,11 +7,23 @@ describe('Operation route', () => {
     await CreateConnectionPostgres.connect()
   })
 
-  test('should return an operation on success', async () => {
+  test('should return an operation CREDIT on success', async () => {
     await request(app)
       .post('/api/operation')
       .send({
         type: 'CREDIT',
+        amount: 1,
+        date: new Date(),
+        description: 'any_description'
+      })
+      .expect(200)
+  })
+
+  test('should return an operation DEBIT on success', async () => {
+    await request(app)
+      .post('/api/operation')
+      .send({
+        type: 'DEBIT',
         amount: 1,
         date: new Date(),
         description: 'any_description'

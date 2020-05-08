@@ -29,7 +29,7 @@ module.exports = [
     type: 'postgres',
     host: 'localhost',
     username: 'postgres',
-    password: 'docker',
+    password: '05481202',
     database: 'finances-dev',
     synchronize: true,
     dropSchema: true,
