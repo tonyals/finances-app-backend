@@ -1,5 +1,5 @@
 import { ReportsController } from './reports-controller'
-import { badRequest } from '../../helpers/http-helper'
+import { badRequest, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { SumAllDebitsOperation } from '../../../domain/usecases/sum-debits'
 import { SumAllDebitsModel } from '../../../domain/models/sum-debits-model'
@@ -54,5 +54,18 @@ describe('ReportsController', () => {
       }
     })
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('operation-type')))
+  })
+
+  test('should return 500 if sumAllDebitsOperation throws', async () => {
+    const { sut, sumAllDebitsStub } = makeSut()
+    jest.spyOn(sumAllDebitsStub, 'sumAllDebitsOperation').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpResponse = await sut.handle({
+      body: {
+        type: OperationType.DEBIT
+      }
+    })
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
