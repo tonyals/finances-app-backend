@@ -32,7 +32,7 @@ const makeSumAllOperationRepository = (): SumAllOperationRepository => {
 
 const makeFinancialResultRepository = (): FinancialResultRepository => {
   class FinancialResultRepositoryStub implements FinancialResultRepository {
-    async financialResult (): Promise<FinancialResultModel> {
+    async financialResultRepository (): Promise<FinancialResultModel> {
       return new Promise(resolve => resolve({
         sumDebits: 25,
         sumCredits: 50,
@@ -101,7 +101,7 @@ describe('DbFinancialReports', () => {
   describe('Financial Results operations', () => {
     test('should call financialResult', async () => {
       const { sut, financialResultRepositoryStub } = makeSut()
-      const financialResultSpy = jest.spyOn(financialResultRepositoryStub, 'financialResult')
+      const financialResultSpy = jest.spyOn(financialResultRepositoryStub, 'financialResultRepository')
       await sut.financialResult()
       expect(financialResultSpy).toHaveBeenCalled()
     })
