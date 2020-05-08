@@ -1,5 +1,5 @@
 import { ReportsController } from './reports-controller'
-import { badRequest, serverError } from '../../helpers/http-helper'
+import { badRequest, serverError, success } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { SumAllDebitsOperation } from '../../../domain/usecases/sum-debits'
 import { SumAllDebitsModel } from '../../../domain/models/sum-debits-model'
@@ -20,11 +20,16 @@ const makeSumAllDebitsOperation = (): SumAllDebitsOperation => {
             id: 1,
             type: OperationType.DEBIT,
             description: 'any_description',
-            amount: 1
+            amount: 2
+          },
+          {
+            id: 2,
+            type: OperationType.DEBIT,
+            description: 'any_description',
+            amount: 3
           }
         ],
-        sumDebits: 2
-
+        sumDebits: 5
       }))
     }
   }
@@ -78,5 +83,31 @@ describe('ReportsController', () => {
       }
     })
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('should return an sumAllDebitsOperation if success', async () => {
+    const { sut } = makeSut()
+    const sumAllDebits = await sut.handle({
+      body: {
+        type: OperationType.DEBIT
+      }
+    })
+    expect(sumAllDebits).toEqual(success({
+      debits: [
+        {
+          id: 1,
+          type: OperationType.DEBIT,
+          description: 'any_description',
+          amount: 2
+        },
+        {
+          id: 2,
+          type: OperationType.DEBIT,
+          description: 'any_description',
+          amount: 3
+        }
+      ],
+      sumDebits: 5
+    }))
   })
 })
