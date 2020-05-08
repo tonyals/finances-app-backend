@@ -34,11 +34,18 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbFinancialReports', () => {
-  test('should call sumAllDebitsOpRepository with correct values', async () => {
+  test('should call sumAllOpRepository with correct value if DEBIT', async () => {
     const { sut, sumAllOpRepositoryStub } = makeSut()
     const sumSpy = jest.spyOn(sumAllOpRepositoryStub, 'sumAllOperationRepository')
     await sut.sumAllOperation(OperationType.DEBIT)
     expect(sumSpy).toHaveBeenCalledWith('DEBIT')
+  })
+
+  test('should call sumAllOpRepository with correct value if CREDIT', async () => {
+    const { sut, sumAllOpRepositoryStub } = makeSut()
+    const sumSpy = jest.spyOn(sumAllOpRepositoryStub, 'sumAllOperationRepository')
+    await sut.sumAllOperation(OperationType.CREDIT)
+    expect(sumSpy).toHaveBeenCalledWith('CREDIT')
   })
 
   test('should sumAllDebitsOpRepository returns DEBIT operations on success', async () => {
