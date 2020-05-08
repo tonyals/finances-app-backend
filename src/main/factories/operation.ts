@@ -5,6 +5,7 @@ import { Controller } from '../../presentation/protocols/controller'
 
 export const makeOperationController = (): Controller => {
   const creditOperationRepository = new OperationPostgresRepository()
-  const dbOperation = new DbOperation(creditOperationRepository)
-  return new OperationController(dbOperation)
+  const debitOperationRepository = new OperationPostgresRepository()
+  const dbOperation = new DbOperation(creditOperationRepository, debitOperationRepository)
+  return new OperationController(dbOperation, dbOperation)
 }
