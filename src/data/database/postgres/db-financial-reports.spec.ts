@@ -12,11 +12,16 @@ const makeSumAllDebitsOperationRepository = (): SumAllDebitsOperationRepository 
   class SumAllDebitsOperationRepositoryStub implements SumAllDebitsOperationRepository {
     async sumAllDebitsOperationRepository (operationType: OperationType.DEBIT): Promise<SumAllDebitsModel> {
       return new Promise(resolve => resolve({
-        id: 1,
-        type: OperationType.DEBIT,
-        description: 'any_description',
-        amount: 1,
-        sum: 2
+        debits: [
+          {
+            id: 1,
+            type: OperationType.DEBIT,
+            description: 'any_description',
+            amount: 1
+          }
+        ],
+        sumDebits: 2
+
       }))
     }
   }
@@ -41,11 +46,16 @@ describe('DbFinancialReports', () => {
     const { sut } = makeSut()
     const debitOperation = await sut.sumAllDebitsOperation(OperationType.DEBIT)
     expect(debitOperation).toEqual({
-      id: 1,
-      type: OperationType.DEBIT,
-      description: 'any_description',
-      amount: 1,
-      sum: 2
+      debits: [
+        {
+          id: 1,
+          type: OperationType.DEBIT,
+          description: 'any_description',
+          amount: 1
+        }
+      ],
+      sumDebits: 2
+
     })
   })
 })
