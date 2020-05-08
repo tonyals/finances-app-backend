@@ -18,13 +18,13 @@ const makeSumAllOperation = (): SumAllOperation => {
         operation: [
           {
             id: 1,
-            type: OperationType.DEBIT,
+            type: type,
             description: 'any_description',
             amount: 2
           },
           {
             id: 2,
-            type: OperationType.DEBIT,
+            type: type,
             description: 'any_description',
             amount: 3
           }
@@ -96,7 +96,7 @@ describe('ReportsController', () => {
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
-  test('should return an sumAllDebitsOperation if success', async () => {
+  test('should return DEBIT operation if success', async () => {
     const { sut } = makeSut()
     const sumAllDebits = await sut.handle({
       body: {
@@ -114,6 +114,32 @@ describe('ReportsController', () => {
         {
           id: 2,
           type: OperationType.DEBIT,
+          description: 'any_description',
+          amount: 3
+        }
+      ],
+      sum: 5
+    }))
+  })
+
+  test('should return CREDIT operation if success', async () => {
+    const { sut } = makeSut()
+    const sumAllCredits = await sut.handle({
+      body: {
+        type: OperationType.CREDIT
+      }
+    })
+    expect(sumAllCredits).toEqual(success({
+      operation: [
+        {
+          id: 1,
+          type: OperationType.CREDIT,
+          description: 'any_description',
+          amount: 2
+        },
+        {
+          id: 2,
+          type: OperationType.CREDIT,
           description: 'any_description',
           amount: 3
         }
