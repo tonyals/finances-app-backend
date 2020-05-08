@@ -56,6 +56,17 @@ describe('ReportsController', () => {
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('operation-type')))
   })
 
+  test('should call sumAllDebitsOperation with correct value', async () => {
+    const { sut, sumAllDebitsStub } = makeSut()
+    const sumAllDebitsOperationSpy = jest.spyOn(sumAllDebitsStub, 'sumAllDebitsOperation')
+    await sut.handle({
+      body: {
+        type: OperationType.DEBIT
+      }
+    })
+    expect(sumAllDebitsOperationSpy).toHaveBeenCalledWith(OperationType.DEBIT)
+  })
+
   test('should return 500 if sumAllDebitsOperation throws', async () => {
     const { sut, sumAllDebitsStub } = makeSut()
     jest.spyOn(sumAllDebitsStub, 'sumAllDebitsOperation').mockImplementationOnce(() => {
