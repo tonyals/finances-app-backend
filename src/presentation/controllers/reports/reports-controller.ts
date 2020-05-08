@@ -6,7 +6,7 @@ import { OperationType } from '../../../domain/models/operation-enum'
 import { SumAllDebitsOperation } from '../../../domain/usecases/sum-debits'
 import { InvalidParamError } from '../../errors/invalid-param'
 
-export class ReportsController implements Controller {
+export class FinancialReportsController implements Controller {
   constructor (
     private readonly sumAllDebits: SumAllDebitsOperation
   ) {}

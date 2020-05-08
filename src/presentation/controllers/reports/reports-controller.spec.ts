@@ -1,4 +1,4 @@
-import { ReportsController } from './reports-controller'
+import { FinancialReportsController } from './reports-controller'
 import { badRequest, serverError, success } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { SumAllDebitsOperation } from '../../../domain/usecases/sum-debits'
@@ -7,7 +7,7 @@ import { OperationType } from '../../../domain/models/operation-enum'
 import { InvalidParamError } from '../../errors/invalid-param'
 
 interface SutTypes {
-  sut: ReportsController
+  sut: FinancialReportsController
   sumAllDebitsStub: SumAllDebitsOperation
 }
 
@@ -38,7 +38,7 @@ const makeSumAllDebitsOperation = (): SumAllDebitsOperation => {
 
 const makeSut = (): SutTypes => {
   const sumAllDebitsStub = makeSumAllDebitsOperation()
-  const sut = new ReportsController(sumAllDebitsStub)
+  const sut = new FinancialReportsController(sumAllDebitsStub)
   return { sut, sumAllDebitsStub }
 }
 
