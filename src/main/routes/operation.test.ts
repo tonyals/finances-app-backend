@@ -1,10 +1,17 @@
 import request from 'supertest'
 import app from '../config/app'
 import { CreateConnectionPostgres } from '../../infra/db/postgres/helpers/postgres-connect-helper'
+import { Operation } from '../../infra/db/postgres/entities/Operation'
+import { getConnection } from 'typeorm'
 
 describe('Operation route', () => {
   beforeAll(async () => {
     await CreateConnectionPostgres.connect()
+  })
+
+  afterAll(async () => {
+    await Operation.delete({})
+    return getConnection(process.env.NODE_ENV).close
   })
 
   test('should return an operation CREDIT on success', async () => {

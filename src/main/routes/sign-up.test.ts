@@ -1,19 +1,18 @@
 import request from 'supertest'
 import app from '../config/app'
 import { CreateConnectionPostgres } from '../../infra/db/postgres/helpers/postgres-connect-helper'
+import { User } from '../../infra/db/postgres/entities/User'
+import { getConnection } from 'typeorm'
 
 describe('SignUp Routes', () => {
   beforeAll(async () => {
     await CreateConnectionPostgres.connect()
   })
 
-  // beforeEach(async () => {
-  //   await
-  // })
-
-  // afterAll(async () => {
-  //   await CreateConnectionPostgres
-  // })
+  afterAll(async () => {
+    await User.delete({})
+    return getConnection(process.env.NODE_ENV).close
+  })
 
   test('should return an account on success', async () => {
     await request(app)
