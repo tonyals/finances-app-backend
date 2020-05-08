@@ -1,11 +1,12 @@
 import { OperationController } from './operation'
 import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
-import { OperationType, OperationCreditModel, OperationDebitModel } from '../../../domain/models/operation-model'
+import { OperationCreditModel, OperationDebitModel } from '../../../domain/models/operation-model'
 import { AddCreditOperation, AddCreditOperationModel } from '../../../domain/usecases/add-credit-operation'
 import MockDate from 'mockdate'
 import { AddDebitOperation, AddDebitOperationModel } from '../../../domain/usecases/add-debit-operation'
 import { InvalidParamError } from '../../errors/invalid-param'
+import { OperationType } from '../../../domain/models/operation-enum'
 
 const makeAddCreditOperation = (): AddCreditOperation => {
   class AddCreditOperationStub implements AddCreditOperation {

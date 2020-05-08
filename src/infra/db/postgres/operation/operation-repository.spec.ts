@@ -1,8 +1,8 @@
 import { OperationPostgresRepository } from './operation-repository'
-import { OperationType } from '../../../../domain/models/operation-model'
 import { CreateConnectionPostgres } from '../helpers/postgres-connect-helper'
 import { Operation } from '../entities/Operation'
 import { getConnection } from 'typeorm'
+import { OperationType } from '../../../../domain/models/operation-enum'
 
 describe('Operation Repository', () => {
   beforeAll(async () => {

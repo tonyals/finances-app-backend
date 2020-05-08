@@ -1,7 +1,4 @@
-export enum OperationType {
-  DEBIT = 'DEBIT',
-  CREDIT = 'CREDIT'
-}
+import { OperationType } from './operation-enum'
 
 export interface OperationCreditModel {
   id: number

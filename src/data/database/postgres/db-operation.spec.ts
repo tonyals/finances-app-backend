@@ -1,10 +1,11 @@
 import { DbOperation } from './db-operation'
 import { CreditOperationRepository } from '../usecases/credit-operation-repository'
 import { AddCreditOperationModel } from '../../../domain/usecases/add-credit-operation'
-import { OperationType, OperationCreditModel, OperationDebitModel } from '../../../domain/models/operation-model'
+import { OperationCreditModel, OperationDebitModel } from '../../../domain/models/operation-model'
 import MockDate from 'mockdate'
 import { DebitOperationRepository } from '../usecases/debit-operation-repository'
 import { AddDebitOperationModel } from '../../../domain/usecases/add-debit-operation'
+import { OperationType } from '../../../domain/models/operation-enum'
 
 const makeCreditOperationRepository = (): CreditOperationRepository => {
   class OperationRepositoryStub implements CreditOperationRepository {

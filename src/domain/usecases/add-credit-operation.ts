@@ -1,4 +1,5 @@
-import { OperationType, OperationCreditModel } from '../models/operation-model'
+import { OperationCreditModel } from '../models/operation-model'
+import { OperationType } from '../models/operation-enum'
 
 export interface AddCreditOperationModel {
   type: OperationType.CREDIT

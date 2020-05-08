@@ -4,8 +4,8 @@ import { MissingParamError } from '../../errors/missing-param'
 import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { AddCreditOperation } from '../../../domain/usecases/add-credit-operation'
 import { AddDebitOperation } from '../../../domain/usecases/add-debit-operation'
-import { OperationType } from '../../../domain/models/operation-model'
 import { InvalidParamError } from '../../errors/invalid-param'
+import { OperationType } from '../../../domain/models/operation-enum'
 
 export class OperationController implements Controller {
   constructor (

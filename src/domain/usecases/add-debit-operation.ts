@@ -1,4 +1,5 @@
-import { OperationType, OperationDebitModel } from '../models/operation-model'
+import { OperationDebitModel } from '../models/operation-model'
+import { OperationType } from '../models/operation-enum'
 
 export interface AddDebitOperationModel {
   type: OperationType.DEBIT
