@@ -1,9 +1,13 @@
 import { OperationType } from './operation-enum'
 
-export interface SumAllDebitsModel {
+export interface Debits {
   id: number
-  type: OperationType.DEBIT
+  type: OperationType
   description: string
   amount: number
-  sum: number
+}
+
+export interface SumAllDebitsModel {
+  debits: Debits[]
+  sumDebits: number
 }

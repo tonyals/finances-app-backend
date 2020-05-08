@@ -13,7 +13,7 @@ export class Operation extends BaseEntity {
   @Column({ type: 'enum', enum: OperationType, nullable: false })
   type: OperationType;
 
-  @Column({ type: 'money', nullable: false })
+  @Column({ type: 'real', nullable: false })
   amount: number;
 
   @Column({ type: 'date', nullable: false })
