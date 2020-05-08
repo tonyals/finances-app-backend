@@ -12,6 +12,7 @@ const makeSumAllDebitsOperationRepository = (): SumAllDebitsOperationRepository 
   class SumAllDebitsOperationRepositoryStub implements SumAllDebitsOperationRepository {
     async sumAllDebitsOperationRepository (operationType: OperationType.DEBIT): Promise<SumAllDebitsModel> {
       return new Promise(resolve => resolve({
+        id: 1,
         type: OperationType.DEBIT,
         description: 'any_description',
         amount: 1,
@@ -34,5 +35,17 @@ describe('DbFinancialReports', () => {
     const sumSpy = jest.spyOn(sumAllDebitsOpRepositoryStub, 'sumAllDebitsOperationRepository')
     await sut.sumAllDebitsOperation(OperationType.DEBIT)
     expect(sumSpy).toHaveBeenCalledWith('DEBIT')
+  })
+
+  test('should sumAllDebitsOpRepository returns DEBIT operations on success', async () => {
+    const { sut } = makeSut()
+    const debitOperation = await sut.sumAllDebitsOperation(OperationType.DEBIT)
+    expect(debitOperation).toEqual({
+      id: 1,
+      type: OperationType.DEBIT,
+      description: 'any_description',
+      amount: 1,
+      sum: 2
+    })
   })
 })
