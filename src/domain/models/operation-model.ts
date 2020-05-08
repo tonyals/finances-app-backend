@@ -5,7 +5,7 @@ export enum OperationType {
 
 export interface OperationCreditModel {
   id: number
-  type: OperationType.CREDIT
+  type: OperationType
   amount: number
   date: Date
   description: string
@@ -13,7 +13,7 @@ export interface OperationCreditModel {
 
 export interface OperationDebitModel {
   id: number
-  type: OperationType.DEBIT
+  type: OperationType
   amount: number
   date: Date
   description: string
