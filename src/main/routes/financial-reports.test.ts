@@ -31,7 +31,7 @@ describe('Operation route', () => {
     return getConnection(process.env.NODE_ENV).close
   })
 
-  test('should return an operation CREDIT on success', async () => {
+  test('should return an operation DEBIT on success', async () => {
     await request(app)
       .get('/api/reports')
       .send({
@@ -39,7 +39,7 @@ describe('Operation route', () => {
       })
       .expect(
         {
-          debits: [
+          operation: [
             {
               id: 1,
               type: 'DEBIT',
@@ -53,7 +53,7 @@ describe('Operation route', () => {
               amount: 3.5
             }
           ],
-          sumDebits: 6.35
+          sum: 6.35
         }
       )
   })

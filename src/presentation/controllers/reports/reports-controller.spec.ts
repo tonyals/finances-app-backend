@@ -1,21 +1,21 @@
 import { FinancialReportsController } from './reports-controller'
 import { badRequest, serverError, success } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
-import { SumAllDebitsOperation } from '../../../domain/usecases/sum-debits'
-import { SumAllDebitsModel } from '../../../domain/models/sum-debits-model'
+import { SumAllOperation } from '../../../domain/usecases/sum-debits'
+import { SumAllModel } from '../../../domain/models/sum-debits-model'
 import { OperationType } from '../../../domain/models/operation-enum'
 import { InvalidParamError } from '../../errors/invalid-param'
 
 interface SutTypes {
   sut: FinancialReportsController
-  sumAllDebitsStub: SumAllDebitsOperation
+  sumAllStub: SumAllOperation
 }
 
-const makeSumAllDebitsOperation = (): SumAllDebitsOperation => {
-  class SumAllDebitsOperationStub implements SumAllDebitsOperation {
-    async sumAllDebitsOperation (type: OperationType.DEBIT): Promise<SumAllDebitsModel> {
+const makeSumAllOperation = (): SumAllOperation => {
+  class SumAllOperationStub implements SumAllOperation {
+    async sumAllOperation (type: OperationType.DEBIT): Promise<SumAllModel> {
       return new Promise(resolve => resolve({
-        debits: [
+        operation: [
           {
             id: 1,
             type: OperationType.DEBIT,
@@ -29,17 +29,17 @@ const makeSumAllDebitsOperation = (): SumAllDebitsOperation => {
             amount: 3
           }
         ],
-        sumDebits: 5
+        sum: 5
       }))
     }
   }
-  return new SumAllDebitsOperationStub()
+  return new SumAllOperationStub()
 }
 
 const makeSut = (): SutTypes => {
-  const sumAllDebitsStub = makeSumAllDebitsOperation()
-  const sut = new FinancialReportsController(sumAllDebitsStub)
-  return { sut, sumAllDebitsStub }
+  const sumAllStub = makeSumAllOperation()
+  const sut = new FinancialReportsController(sumAllStub)
+  return { sut, sumAllStub }
 }
 
 describe('ReportsController', () => {
@@ -62,8 +62,8 @@ describe('ReportsController', () => {
   })
 
   test('should call sumAllDebitsOperation with correct value', async () => {
-    const { sut, sumAllDebitsStub } = makeSut()
-    const sumAllDebitsOperationSpy = jest.spyOn(sumAllDebitsStub, 'sumAllDebitsOperation')
+    const { sut, sumAllStub } = makeSut()
+    const sumAllDebitsOperationSpy = jest.spyOn(sumAllStub, 'sumAllOperation')
     await sut.handle({
       body: {
         type: OperationType.DEBIT
@@ -73,8 +73,8 @@ describe('ReportsController', () => {
   })
 
   test('should return 500 if sumAllDebitsOperation throws', async () => {
-    const { sut, sumAllDebitsStub } = makeSut()
-    jest.spyOn(sumAllDebitsStub, 'sumAllDebitsOperation').mockImplementationOnce(() => {
+    const { sut, sumAllStub } = makeSut()
+    jest.spyOn(sumAllStub, 'sumAllOperation').mockImplementationOnce(() => {
       throw new Error()
     })
     const httpResponse = await sut.handle({
@@ -93,7 +93,7 @@ describe('ReportsController', () => {
       }
     })
     expect(sumAllDebits).toEqual(success({
-      debits: [
+      operation: [
         {
           id: 1,
           type: OperationType.DEBIT,
@@ -107,7 +107,7 @@ describe('ReportsController', () => {
           amount: 3
         }
       ],
-      sumDebits: 5
+      sum: 5
     }))
   })
 })

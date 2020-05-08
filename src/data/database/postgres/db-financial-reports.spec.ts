@@ -1,52 +1,51 @@
 import { DbFinancialReportsOperation } from './db-financial-reports'
-import { SumAllDebitsOperationRepository } from '../usecases/sum-debits-repository'
+import { SumAllOperationRepository } from '../usecases/sum-debits-repository'
 import { OperationType } from '../../../domain/models/operation-enum'
-import { SumAllDebitsModel } from '../../../domain/models/sum-debits-model'
+import { SumAllModel } from '../../../domain/models/sum-debits-model'
 
 interface SutTypes {
   sut: DbFinancialReportsOperation
-  sumAllDebitsOpRepositoryStub: SumAllDebitsOperationRepository
+  sumAllOpRepositoryStub: SumAllOperationRepository
 }
 
-const makeSumAllDebitsOperationRepository = (): SumAllDebitsOperationRepository => {
-  class SumAllDebitsOperationRepositoryStub implements SumAllDebitsOperationRepository {
-    async sumAllDebitsOperationRepository (operationType: OperationType.DEBIT): Promise<SumAllDebitsModel> {
+const makeSumAllOperationRepository = (): SumAllOperationRepository => {
+  class SumAllOperationRepositoryStub implements SumAllOperationRepository {
+    async sumAllOperationRepository (operationType: OperationType): Promise<SumAllModel> {
       return new Promise(resolve => resolve({
-        debits: [
+        operation: [
           {
             id: 1,
-            type: OperationType.DEBIT,
+            type: operationType,
             description: 'any_description',
             amount: 1
           }
         ],
-        sumDebits: 2
-
+        sum: 2
       }))
     }
   }
-  return new SumAllDebitsOperationRepositoryStub()
+  return new SumAllOperationRepositoryStub()
 }
 
 const makeSut = (): SutTypes => {
-  const sumAllDebitsOpRepositoryStub = makeSumAllDebitsOperationRepository()
-  const sut = new DbFinancialReportsOperation(sumAllDebitsOpRepositoryStub)
-  return { sut, sumAllDebitsOpRepositoryStub }
+  const sumAllOpRepositoryStub = makeSumAllOperationRepository()
+  const sut = new DbFinancialReportsOperation(sumAllOpRepositoryStub)
+  return { sut, sumAllOpRepositoryStub }
 }
 
 describe('DbFinancialReports', () => {
   test('should call sumAllDebitsOpRepository with correct values', async () => {
-    const { sut, sumAllDebitsOpRepositoryStub } = makeSut()
-    const sumSpy = jest.spyOn(sumAllDebitsOpRepositoryStub, 'sumAllDebitsOperationRepository')
-    await sut.sumAllDebitsOperation(OperationType.DEBIT)
+    const { sut, sumAllOpRepositoryStub } = makeSut()
+    const sumSpy = jest.spyOn(sumAllOpRepositoryStub, 'sumAllOperationRepository')
+    await sut.sumAllOperation(OperationType.DEBIT)
     expect(sumSpy).toHaveBeenCalledWith('DEBIT')
   })
 
   test('should sumAllDebitsOpRepository returns DEBIT operations on success', async () => {
     const { sut } = makeSut()
-    const debitOperation = await sut.sumAllDebitsOperation(OperationType.DEBIT)
+    const debitOperation = await sut.sumAllOperation(OperationType.DEBIT)
     expect(debitOperation).toEqual({
-      debits: [
+      operation: [
         {
           id: 1,
           type: OperationType.DEBIT,
@@ -54,8 +53,7 @@ describe('DbFinancialReports', () => {
           amount: 1
         }
       ],
-      sumDebits: 2
-
+      sum: 2
     })
   })
 })

@@ -30,7 +30,7 @@ describe('Operation Repository', () => {
 
   test('should return an array of DebitOperation if success', async () => {
     const sut = new FinancialReportsPostgresRepository()
-    const operationDebit = await sut.sumAllDebitsOperationRepository(OperationType.DEBIT)
+    const operationDebit = await sut.sumAllOperationRepository(OperationType.DEBIT)
     expect(operationDebit).toBeTruthy()
   })
 })

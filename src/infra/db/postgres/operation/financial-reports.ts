@@ -1,25 +1,25 @@
-import { SumAllDebitsOperationRepository } from '../../../../data/database/usecases/sum-debits-repository'
+import { SumAllOperationRepository } from '../../../../data/database/usecases/sum-debits-repository'
 import { OperationType } from '../../../../domain/models/operation-enum'
-import { SumAllDebitsModel } from '../../../../domain/models/sum-debits-model'
+import { SumAllModel } from '../../../../domain/models/sum-debits-model'
 import { Operation } from '../entities/Operation'
 
-export class FinancialReportsPostgresRepository implements SumAllDebitsOperationRepository {
-  async sumAllDebitsOperationRepository (operationType: OperationType.DEBIT): Promise<SumAllDebitsModel> {
-    const finDebits = await Operation.find({
+export class FinancialReportsPostgresRepository implements SumAllOperationRepository {
+  async sumAllOperationRepository (operationType: OperationType): Promise<SumAllModel> {
+    const result = await Operation.find({
       select: ['id', 'type', 'description', 'amount'],
       where: {
-        type: OperationType.DEBIT
+        type: operationType
       }
     })
 
-    const totalDebits = finDebits.reduce((sum, value) => {
+    const total = result.reduce((sum, value) => {
       return sum + value.amount
     }, 0)
 
-    const debitOperations: SumAllDebitsModel = {
-      debits: finDebits,
-      sumDebits: totalDebits
+    const operations: SumAllModel = {
+      operation: result,
+      sum: total
     }
-    return debitOperations
+    return operations
   }
 }
