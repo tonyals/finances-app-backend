@@ -1,4 +1,5 @@
 export enum OperationType {
   DEBIT = 'DEBIT',
-  CREDIT = 'CREDIT'
+  CREDIT = 'CREDIT',
+  FINANCIALRESULT = 'FINANCIAL-RESULT'
 }

@@ -5,10 +5,12 @@ import { MissingParamError } from '../../errors/missing-param'
 import { OperationType } from '../../../domain/models/operation-enum'
 import { SumAllOperation } from '../../../domain/usecases/sum-all'
 import { InvalidParamError } from '../../errors/invalid-param'
+import { FinancialResultOperation } from '../../../domain/usecases/financial-result'
 
 export class FinancialReportsController implements Controller {
   constructor (
-    private readonly sumAll: SumAllOperation
+    private readonly sumAll: SumAllOperation,
+    private readonly financialResult: FinancialResultOperation
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -27,6 +29,11 @@ export class FinancialReportsController implements Controller {
           const creditOperation = await this.sumAll
             .sumAllOperation(OperationType.CREDIT)
           return success(creditOperation)
+        }
+        case OperationType.FINANCIALRESULT: {
+          const financialResult = await this.financialResult
+            .financialResult()
+          return success(financialResult)
         }
         default:
           return badRequest(new InvalidParamError('operation-type'))
