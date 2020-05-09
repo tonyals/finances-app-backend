@@ -31,7 +31,7 @@ describe('Operation route', () => {
 
   test('should return an operation DEBIT on success', async () => {
     await request(app)
-      .get('/api/reports')
+      .post('/api/reports')
       .send({
         type: 'DEBIT'
       })
@@ -52,7 +52,7 @@ describe('Operation route', () => {
 
   test('should return an operation CREDIT on success', async () => {
     await request(app)
-      .get('/api/reports')
+      .post('/api/reports')
       .send({
         type: 'CREDIT'
       })
@@ -73,7 +73,7 @@ describe('Operation route', () => {
 
   test('should return an FINANCIAL-RESULT on success', async () => {
     await request(app)
-      .get('/api/reports')
+      .post('/api/reports')
       .send({
         type: 'FINANCIAL-RESULT'
       })
