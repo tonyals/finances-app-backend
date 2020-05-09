@@ -33,7 +33,7 @@ module.exports = [
     database: 'finances-dev',
     synchronize: true,
     dropSchema: true,
-    logging: true,
+    logging: false,
     entities: [
       'src/infra/db/postgres/entities/**/*.ts'
     ],
