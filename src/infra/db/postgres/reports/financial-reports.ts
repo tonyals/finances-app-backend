@@ -16,14 +16,13 @@ export class FinancialReportsPostgresRepository implements SumAllOperationReposi
     })
 
     const total = result.reduce((sum, value) => {
-      const result = sum + value.amount
-      result.toFixed(2)
-      return result
+      return sum + value.amount
     }, 0)
 
+    const totalFormatted = total.toFixed(2)
     const operations: SumAllModel = {
       operation: result,
-      sum: total
+      sum: parseFloat(totalFormatted)
     }
     return operations
   }
