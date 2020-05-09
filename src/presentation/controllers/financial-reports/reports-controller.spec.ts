@@ -5,10 +5,13 @@ import { SumAllOperation } from '../../../domain/usecases/sum-all'
 import { SumAllModel } from '../../../domain/models/sum-all-model'
 import { OperationType } from '../../../domain/models/operation-enum'
 import { InvalidParamError } from '../../errors/invalid-param'
+import { FinancialResultOperation } from '../../../domain/usecases/financial-result'
+import { FinancialResultModel } from '../../../domain/models/financial-result-model'
 
 interface SutTypes {
   sut: FinancialReportsController
   sumAllStub: SumAllOperation
+  financialResultStub: FinancialResultOperation
 }
 
 const makeSumAllOperation = (): SumAllOperation => {
@@ -36,10 +39,24 @@ const makeSumAllOperation = (): SumAllOperation => {
   return new SumAllOperationStub()
 }
 
+const makeFinancialResult = (): FinancialResultOperation => {
+  class FinancialResultStub implements FinancialResultOperation {
+    async financialResult (): Promise<FinancialResultModel> {
+      return new Promise(resolve => resolve({
+        sumCredits: 10,
+        sumDebits: 5,
+        result: 5
+      }))
+    }
+  }
+  return new FinancialResultStub()
+}
+
 const makeSut = (): SutTypes => {
   const sumAllStub = makeSumAllOperation()
-  const sut = new FinancialReportsController(sumAllStub)
-  return { sut, sumAllStub }
+  const financialResultStub = makeFinancialResult()
+  const sut = new FinancialReportsController(sumAllStub, financialResultStub)
+  return { sut, sumAllStub, financialResultStub }
 }
 
 describe('ReportsController', () => {
@@ -146,5 +163,16 @@ describe('ReportsController', () => {
       ],
       sum: 5
     }))
+  })
+
+  test('should return an financial result on success', async () => {
+    const { sut, financialResultStub } = makeSut()
+    const financialResultSpy = jest.spyOn(financialResultStub, 'financialResult')
+    await sut.handle({
+      body: {
+        type: OperationType.FINANCIALRESULT
+      }
+    })
+    expect(financialResultSpy).toHaveBeenCalled()
   })
 })
