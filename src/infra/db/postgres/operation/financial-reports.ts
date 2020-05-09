@@ -33,7 +33,6 @@ export class FinancialReportsPostgresRepository implements SumAllOperationReposi
     const sumDebits = await this.sumAllOperationRepository(OperationType.DEBIT)
     const result = sumCredits.sum + (sumDebits.sum * -1)
     const resultFormatted = result.toFixed(2)
-    parseFloat(resultFormatted)
     const financialResult: FinancialResultModel = {
       sumCredits: sumCredits.sum,
       sumDebits: sumDebits.sum,
