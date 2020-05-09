@@ -70,4 +70,19 @@ describe('Operation route', () => {
         }
       )
   })
+
+  test('should return an FINANCIAL-RESULT on success', async () => {
+    await request(app)
+      .get('/api/reports')
+      .send({
+        type: 'FINANCIAL-RESULT'
+      })
+      .expect(
+        {
+          sumDebits: 2.85,
+          sumCredits: 3.5,
+          result: 0.65
+        }
+      )
+  })
 })
