@@ -23,7 +23,7 @@ const makeSumAllOperationRepository = (): SumAllOperationRepository => {
             id: 1,
             type: operationType,
             description: 'any_description',
-            amount: 1
+            amount: 2
           }
         ],
         sum: 2
@@ -47,7 +47,7 @@ const makeSumPeriodOperationRepository = (): SumPeriodOperationRepository => {
               finalDate: period.finalDate
             },
             description: 'any_description',
-            amount: 1
+            amount: 2
           }
         ],
         sum: 2
@@ -108,7 +108,7 @@ describe('DbFinancialReports', () => {
             id: 1,
             type: OperationType.DEBIT,
             description: 'any_description',
-            amount: 1
+            amount: 2
           }
         ],
         sum: 2
@@ -124,7 +124,7 @@ describe('DbFinancialReports', () => {
             id: 1,
             type: OperationType.CREDIT,
             description: 'any_description',
-            amount: 1
+            amount: 2
           }
         ],
         sum: 2
@@ -165,6 +165,32 @@ describe('DbFinancialReports', () => {
           initialDate: new Date('2020-05-05'),
           finalDate: new Date('2020-05-10')
         })
+    })
+
+    test('should sumPeriodOpRepository returns sumPeriodOperations', async () => {
+      const { sut } = makeSut()
+      const sumPeriod = await sut.sumPeriodOperation(OperationType.CREDIT,
+        {
+          initialDate: new Date('2020-05-05'),
+          finalDate: new Date('2020-05-10')
+        }
+      )
+      expect(sumPeriod).toEqual({
+        operation: [
+          {
+            id: 1,
+            type: 'CREDIT',
+            date: new Date('2020-05-10'),
+            period: {
+              initialDate: new Date('2020-05-05'),
+              finalDate: new Date('2020-05-10')
+            },
+            description: 'any_description',
+            amount: 2
+          }
+        ],
+        sum: 2
+      })
     })
   })
 })
