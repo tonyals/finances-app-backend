@@ -2,7 +2,7 @@ import { FinancialReportsController } from './reports-controller'
 import { badRequest, serverError, success } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { SumAllOperation } from '../../../domain/usecases/sum-all'
-import { SumAllModel } from '../../../domain/models/sum-all-model'
+import { SumModel } from '../../../domain/models/sum-model'
 import { OperationType } from '../../../domain/models/operation-enum'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { FinancialResultOperation } from '../../../domain/usecases/financial-result'
@@ -16,7 +16,7 @@ interface SutTypes {
 
 const makeSumAllOperation = (): SumAllOperation => {
   class SumAllOperationStub implements SumAllOperation {
-    async sumAllOperation (type: OperationType.DEBIT): Promise<SumAllModel> {
+    async sumAllOperation (type: OperationType.DEBIT): Promise<SumModel> {
       return new Promise(resolve => resolve({
         operation: [
           {

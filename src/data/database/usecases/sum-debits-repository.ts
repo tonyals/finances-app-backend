@@ -1,6 +1,6 @@
 import { OperationType } from '../../../domain/models/operation-enum'
-import { SumAllModel } from '../../../domain/models/sum-all-model'
+import { SumModel } from '../../../domain/models/sum-model'
 
 export interface SumAllOperationRepository {
-  sumAllOperationRepository(operationType: OperationType): Promise<SumAllModel>
+  sumAllOperationRepository(operationType: OperationType): Promise<SumModel>
 }

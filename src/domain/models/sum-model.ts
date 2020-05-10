@@ -4,10 +4,11 @@ export interface Operation {
   id: number
   type: OperationType
   description: string
+  date?: Date
   amount: number
 }
 
-export interface SumAllModel {
+export interface SumModel {
   operation: Operation[]
   sum: number
 }

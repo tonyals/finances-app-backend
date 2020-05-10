@@ -1,13 +1,13 @@
 import { SumAllOperationRepository } from '../../../../data/database/usecases/sum-debits-repository'
 import { OperationType } from '../../../../domain/models/operation-enum'
-import { SumAllModel } from '../../../../domain/models/sum-all-model'
+import { SumModel } from '../../../../domain/models/sum-model'
 import { Operation } from '../entities/Operation'
 import { FinancialResultRepository } from '../../../../data/database/usecases/financial-result-repository'
 import { FinancialResultModel } from '../../../../domain/models/financial-result-model'
 
 export class FinancialReportsPostgresRepository implements SumAllOperationRepository,
   FinancialResultRepository {
-  async sumAllOperationRepository (operationType: OperationType): Promise<SumAllModel> {
+  async sumAllOperationRepository (operationType: OperationType): Promise<SumModel> {
     const result = await Operation.find({
       select: ['id', 'type', 'description', 'amount'],
       where: {
@@ -20,7 +20,7 @@ export class FinancialReportsPostgresRepository implements SumAllOperationReposi
     }, 0)
 
     const totalFormatted = total.toFixed(2)
-    const operations: SumAllModel = {
+    const operations: SumModel = {
       operation: result,
       sum: parseFloat(totalFormatted)
     }

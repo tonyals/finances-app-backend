@@ -1,7 +1,7 @@
 import { DbFinancialReportsOperation } from './db-financial-reports'
 import { SumAllOperationRepository } from '../usecases/sum-debits-repository'
 import { OperationType } from '../../../domain/models/operation-enum'
-import { SumAllModel } from '../../../domain/models/sum-all-model'
+import { SumModel } from '../../../domain/models/sum-model'
 import { FinancialResultRepository } from '../usecases/financial-result-repository'
 import { FinancialResultModel } from '../../../domain/models/financial-result-model'
 
@@ -13,7 +13,7 @@ interface SutTypes {
 
 const makeSumAllOperationRepository = (): SumAllOperationRepository => {
   class SumAllOperationRepositoryStub implements SumAllOperationRepository {
-    async sumAllOperationRepository (operationType: OperationType): Promise<SumAllModel> {
+    async sumAllOperationRepository (operationType: OperationType): Promise<SumModel> {
       return new Promise(resolve => resolve({
         operation: [
           {

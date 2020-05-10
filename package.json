@@ -15,6 +15,7 @@
   "dependencies": {
     "bcrypt": "^4.0.1",
     "express": "^4.17.1",
+    "moment": "^2.25.3",
     "pg": "^8.0.3",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.24",
