@@ -4,11 +4,14 @@ import { OperationType } from '../../../domain/models/operation-enum'
 import { SumModel } from '../../../domain/models/sum-model'
 import { FinancialResultRepository } from '../usecases/financial-result-repository'
 import { FinancialResultModel } from '../../../domain/models/financial-result-model'
+import { SumPeriodOperationRepository } from '../usecases/sum-period-repository'
+import { Period } from '../../../domain/usecases/sum-period'
 
 interface SutTypes {
   sut: DbFinancialReportsOperation
   financialResultRepositoryStub: FinancialResultRepository
   sumAllOpRepositoryStub: SumAllOperationRepository
+  sumPeriodOpRepositoryStub: SumPeriodOperationRepository
 }
 
 const makeSumAllOperationRepository = (): SumAllOperationRepository => {
@@ -30,6 +33,30 @@ const makeSumAllOperationRepository = (): SumAllOperationRepository => {
   return new SumAllOperationRepositoryStub()
 }
 
+const makeSumPeriodOperationRepository = (): SumPeriodOperationRepository => {
+  class SumPeriodOperationRepositoryStub implements SumPeriodOperationRepository {
+    async sumPeriodOperationRepository (operationType: OperationType, period: Period): Promise<SumModel> {
+      return new Promise(resolve => resolve({
+        operation: [
+          {
+            id: 1,
+            type: operationType,
+            date: new Date('2020-05-10'),
+            period: {
+              initialDate: period.initialDate,
+              finalDate: period.finalDate
+            },
+            description: 'any_description',
+            amount: 1
+          }
+        ],
+        sum: 2
+      }))
+    }
+  }
+  return new SumPeriodOperationRepositoryStub()
+}
+
 const makeFinancialResultRepository = (): FinancialResultRepository => {
   class FinancialResultRepositoryStub implements FinancialResultRepository {
     async financialResultRepository (): Promise<FinancialResultModel> {
@@ -46,8 +73,14 @@ const makeFinancialResultRepository = (): FinancialResultRepository => {
 const makeSut = (): SutTypes => {
   const sumAllOpRepositoryStub = makeSumAllOperationRepository()
   const financialResultRepositoryStub = makeFinancialResultRepository()
-  const sut = new DbFinancialReportsOperation(sumAllOpRepositoryStub, financialResultRepositoryStub)
-  return { sut, sumAllOpRepositoryStub, financialResultRepositoryStub }
+  const sumPeriodOpRepositoryStub = makeSumPeriodOperationRepository()
+  const sut = new DbFinancialReportsOperation(sumAllOpRepositoryStub, financialResultRepositoryStub, sumPeriodOpRepositoryStub)
+  return {
+    sut,
+    sumAllOpRepositoryStub,
+    financialResultRepositoryStub,
+    sumPeriodOpRepositoryStub
+  }
 }
 
 describe('DbFinancialReports', () => {
@@ -114,6 +147,24 @@ describe('DbFinancialReports', () => {
         sumCredits: 50,
         result: 25
       })
+    })
+  })
+
+  describe('Financial Results By Period', () => {
+    test('should call sumPeriodOpRepository with correct values', async () => {
+      const { sut, sumPeriodOpRepositoryStub } = makeSut()
+      const financialResultSpy = jest.spyOn(sumPeriodOpRepositoryStub, 'sumPeriodOperationRepository')
+      await sut.sumPeriodOperation(OperationType.CREDIT,
+        {
+          initialDate: new Date('2020-05-05'),
+          finalDate: new Date('2020-05-10')
+        }
+      )
+      expect(financialResultSpy).toHaveBeenCalledWith(OperationType.CREDIT,
+        {
+          initialDate: new Date('2020-05-05'),
+          finalDate: new Date('2020-05-10')
+        })
     })
   })
 })
