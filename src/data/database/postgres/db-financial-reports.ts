@@ -22,11 +22,11 @@ SumPeriodOperation {
   }
 
   async sumPeriodOperation (type: OperationType, period: Period): Promise<SumModel> {
-    await this.sumPeriodOpRepository.sumPeriodOperationRepository(type, {
+    const sumPeriod = await this.sumPeriodOpRepository.sumPeriodOperationRepository(type, {
       initialDate: period.initialDate,
       finalDate: period.finalDate
     })
-    return new Promise(resolve => resolve(null))
+    return sumPeriod
   }
 
   async financialResult (): Promise<FinancialResultModel> {
