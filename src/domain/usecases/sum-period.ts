@@ -2,8 +2,8 @@ import { OperationType } from '../models/operation-enum'
 import { SumModel } from '../models/sum-model'
 
 export interface Period {
-  initialDate: string
-  finalDate: string
+  initialDate: Date
+  finalDate: Date
 }
 
 export interface SumPeriodOperation {
