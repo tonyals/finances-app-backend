@@ -10,14 +10,14 @@ describe('Financial Reports Repository', () => {
     await Operation.create({
       type: OperationType.DEBIT,
       amount: 2.85,
-      date: new Date(),
+      date: new Date('2020-05-05T00:00:00-03:00'),
       description: 'any_description'
     }).save()
 
     await Operation.create({
       type: OperationType.CREDIT,
       amount: 2.95,
-      date: new Date(),
+      date: new Date('2020-05-05T00:00:00-03:00'),
       description: 'any_description'
     }).save()
   })
@@ -51,6 +51,18 @@ describe('Financial Reports Repository', () => {
       expect(financialResult.sumCredits).toBe(2.95)
       expect(financialResult.sumDebits).toBe(2.85)
       expect(financialResult.result).toBe(0.10)
+    })
+  })
+
+  describe('Sum Period operation repository', () => {
+    test('should return an sum period result if success', async () => {
+      const sut = new FinancialReportsPostgresRepository()
+      const sumPeriodResult = await sut.sumPeriodOperationRepository(OperationType.CREDIT, {
+        initialDate: new Date('2020-05-05T00:00:00-03:00'),
+        finalDate: new Date('2020-05-05T00:00:00-03:00')
+      })
+      expect(sumPeriodResult).toBeTruthy()
+      expect(sumPeriodResult.sum).toBe(2.95)
     })
   })
 })
