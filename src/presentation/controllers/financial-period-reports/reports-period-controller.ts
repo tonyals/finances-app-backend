@@ -5,10 +5,12 @@ import { MissingParamError } from '../../errors/missing-param'
 import { ReportsPeriod, OperationType } from '../../../domain/models/operation-enum'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { SumPeriodOperation } from '../../../domain/usecases/sum-period'
+import { DateValidator } from '../../protocols/date-validator'
 
 export class FinancialPeriodReportsController implements Controller {
   constructor (
-    private readonly sumPeriod: SumPeriodOperation
+    private readonly sumPeriod: SumPeriodOperation,
+    private readonly dateValidator: DateValidator
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -20,9 +22,14 @@ export class FinancialPeriodReportsController implements Controller {
         }
       }
       const { typeReport, operation, initialDate, finalDate } = httpRequest.body
-      if (operation !== OperationType.CREDIT || OperationType.DEBIT) {
+      if (operation !== (OperationType.CREDIT || OperationType.DEBIT)) {
         return badRequest(new InvalidParamError('type-operation'))
       }
+
+      if (!this.dateValidator.isValid(initialDate)) {
+        return badRequest(new InvalidParamError('initialDate'))
+      }
+
       switch (typeReport) {
         case ReportsPeriod.SUMPERIOD: {
           const sumPeriod = await this.sumPeriod
