@@ -13,13 +13,13 @@ export class FinancialPeriodReportsController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
+      const requiredFields = ['typeReport', 'operation', 'initialDate', 'finalDate']
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field))
+        }
+      }
       const { typeReport, operation, initialDate, finalDate } = httpRequest.body
-      if (!typeReport) {
-        return badRequest(new MissingParamError('type-report'))
-      }
-      if (!operation) {
-        return badRequest(new MissingParamError('type-operation'))
-      }
       if (operation !== OperationType.CREDIT || OperationType.DEBIT) {
         return badRequest(new InvalidParamError('type-operation'))
       }

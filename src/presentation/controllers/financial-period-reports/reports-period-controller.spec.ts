@@ -62,7 +62,7 @@ describe('ReportsController', () => {
         finalDate: 'any-date'
       }
     })
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('type-report')))
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('typeReport')))
   })
 
   test('should return 400 if no type operation is provided', async () => {
@@ -74,7 +74,7 @@ describe('ReportsController', () => {
         finalDate: 'any-date'
       }
     })
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('type-operation')))
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('operation')))
   })
 
   test('should return 400 if invalid type operation is provided', async () => {
