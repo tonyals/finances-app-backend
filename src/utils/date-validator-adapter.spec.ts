@@ -11,4 +11,11 @@ describe('DateValidator Adapter', () => {
     sut.isValid('2020-10-05')
     expect(dateValidatorSpy).toHaveBeenCalledWith('2020-10-05')
   })
+
+  test('should return false if validator returns false', () => {
+    const sut = makeSut()
+    jest.spyOn(sut, 'isValid').mockReturnValueOnce(false)
+    const validator = sut.isValid('2020-10-05')
+    expect(validator).toBeFalsy()
+  })
 })
