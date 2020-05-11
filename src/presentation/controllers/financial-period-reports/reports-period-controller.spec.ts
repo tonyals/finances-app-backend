@@ -4,6 +4,7 @@ import { MissingParamError } from '../../errors/missing-param'
 import { SumModel } from '../../../domain/models/sum-model'
 import { OperationType } from '../../../domain/models/operation-enum'
 import { SumPeriodOperation, Period } from '../../../domain/usecases/sum-period'
+import { InvalidParamError } from '../../errors/invalid-param'
 
 interface SutTypes {
   sut: FinancialPeriodReportsController
@@ -74,5 +75,18 @@ describe('ReportsController', () => {
       }
     })
     expect(httpResponse).toEqual(badRequest(new MissingParamError('type-operation')))
+  })
+
+  test('should return 400 if invalid type operation is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({
+      body: {
+        typeReport: 'type-report',
+        operation: 'invalid-type',
+        initialDate: 'any-date',
+        finalDate: 'any-date'
+      }
+    })
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('type-operation')))
   })
 })
