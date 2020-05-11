@@ -12,7 +12,8 @@ describe('Operation Repository', () => {
     await Operation.delete({})
   })
 
-  afterAll(() => {
+  afterAll(async () => {
+    await Operation.delete({})
     return getConnection(process.env.NODE_ENV).close
   })
 
