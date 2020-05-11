@@ -3,3 +3,7 @@ export enum OperationType {
   CREDIT = 'CREDIT',
   FINANCIALRESULT = 'FINANCIAL-RESULT'
 }
+
+export enum ReportsPeriod {
+  SUMPERIOD = 'SUM-PERIOD'
+}
