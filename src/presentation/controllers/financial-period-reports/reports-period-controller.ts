@@ -26,8 +26,8 @@ export class FinancialPeriodReportsController implements Controller {
         return badRequest(new InvalidParamError('type-operation'))
       }
 
-      if (!this.dateValidator.isValid(initialDate)) {
-        return badRequest(new InvalidParamError('initialDate'))
+      if (!this.dateValidator.isValid(initialDate) || !this.dateValidator.isValid(finalDate)) {
+        return badRequest(new InvalidParamError('periodDate'))
       }
 
       switch (typeReport) {
