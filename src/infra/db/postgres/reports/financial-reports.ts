@@ -4,12 +4,15 @@ import { SumModel } from '../../../../domain/models/sum-model'
 import { Operation } from '../entities/Operation'
 import { FinancialResultRepository } from '../../../../data/database/usecases/financial-result-repository'
 import { FinancialResultModel } from '../../../../domain/models/financial-result-model'
+import { SumPeriodOperationRepository } from '../../../../data/database/usecases/sum-period-repository'
+import { Period } from '../../../../domain/usecases/sum-period'
+import { Between } from 'typeorm'
 
 export class FinancialReportsPostgresRepository implements SumAllOperationRepository,
-  FinancialResultRepository {
+  FinancialResultRepository, SumPeriodOperationRepository {
   async sumAllOperationRepository (operationType: OperationType): Promise<SumModel> {
     const result = await Operation.find({
-      select: ['id', 'type', 'description', 'amount'],
+      select: ['id', 'type', 'description', 'amount', 'date'],
       where: {
         type: operationType
       }
@@ -38,5 +41,25 @@ export class FinancialReportsPostgresRepository implements SumAllOperationReposi
       result: parseFloat(resultFormatted)
     }
     return financialResult
+  }
+
+  async sumPeriodOperationRepository (operationType: OperationType, period: Period): Promise<SumModel> {
+    const result = await Operation.find({
+      select: ['id', 'type', 'description', 'amount', 'date'],
+      where: {
+        type: operationType,
+        date: Between(period.initialDate, period.finalDate)
+      }
+    })
+    const total = result.reduce((sum, value) => {
+      return sum + value.amount
+    }, 0)
+
+    const totalFormatted = total.toFixed(2)
+    const operations: SumModel = {
+      operation: result,
+      sum: parseFloat(totalFormatted)
+    }
+    return operations
   }
 }
