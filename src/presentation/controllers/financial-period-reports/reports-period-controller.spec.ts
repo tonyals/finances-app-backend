@@ -153,4 +153,17 @@ describe('ReportsController', () => {
     })
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('periodDate')))
   })
+
+  test('should return 400 if invalid type report is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({
+      body: {
+        typeReport: 'invalid-type-report',
+        operation: 'CREDIT',
+        initialDate: 'any-date',
+        finalDate: 'any-date'
+      }
+    })
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('invalid-type-report')))
+  })
 })
