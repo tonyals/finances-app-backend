@@ -2,7 +2,7 @@ import { Controller } from '../../protocols/controller'
 import { HttpResponse, HttpRequest } from '../../protocols/http'
 import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
-import { ReportsPeriod } from '../../../domain/models/operation-enum'
+import { ReportsPeriod, OperationType } from '../../../domain/models/operation-enum'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { SumPeriodOperation } from '../../../domain/usecases/sum-period'
 
@@ -20,6 +20,9 @@ export class FinancialPeriodReportsController implements Controller {
       if (!operation) {
         return badRequest(new MissingParamError('type-operation'))
       }
+      if (operation !== OperationType.CREDIT || OperationType.DEBIT) {
+        return badRequest(new InvalidParamError('type-operation'))
+      }
       switch (typeReport) {
         case ReportsPeriod.SUMPERIOD: {
           const sumPeriod = await this.sumPeriod
@@ -30,7 +33,7 @@ export class FinancialPeriodReportsController implements Controller {
           return success(sumPeriod)
         }
         default:
-          return badRequest(new InvalidParamError('operation-type'))
+          return badRequest(new InvalidParamError('report-type'))
       }
     } catch (error) {
       return serverError(error)
