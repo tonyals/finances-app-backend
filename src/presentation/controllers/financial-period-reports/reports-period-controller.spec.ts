@@ -70,7 +70,7 @@ describe('ReportsController', () => {
     const httpResponse = await sut.handle({
       body: {
         operation: 'any-operation',
-        initialDate: 'CREDIT',
+        initialDate: 'any-date',
         finalDate: 'any-date'
       }
     })
@@ -82,7 +82,7 @@ describe('ReportsController', () => {
     const httpResponse = await sut.handle({
       body: {
         typeReport: 'type-report',
-        initialDate: 'CREDIT',
+        initialDate: 'any-date',
         finalDate: 'any-date'
       }
     })
@@ -94,7 +94,7 @@ describe('ReportsController', () => {
     const httpResponse = await sut.handle({
       body: {
         typeReport: 'type-report',
-        operation: 'CREDIT',
+        operation: 'any-operation',
         finalDate: 'any-date'
       }
     })
@@ -106,7 +106,7 @@ describe('ReportsController', () => {
     const httpResponse = await sut.handle({
       body: {
         typeReport: 'type-report',
-        operation: 'CREDIT',
+        operation: 'any-operation',
         initialDate: 'any-date'
       }
     })
@@ -132,9 +132,23 @@ describe('ReportsController', () => {
     const httpResponse = await sut.handle({
       body: {
         typeReport: 'type-report',
-        operation: 'CREDIT',
+        operation: 'any-operation',
         initialDate: 'invalid-date',
         finalDate: 'any-date'
+      }
+    })
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('periodDate')))
+  })
+
+  test('should return 400 if invalid finalDate is provided', async () => {
+    const { sut, dateValidatorStub } = makeSut()
+    jest.spyOn(dateValidatorStub, 'isValid').mockReturnValueOnce(false)
+    const httpResponse = await sut.handle({
+      body: {
+        typeReport: 'type-report',
+        operation: 'any-operation',
+        initialDate: 'any-date',
+        finalDate: 'invalid-date'
       }
     })
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('periodDate')))
