@@ -22,12 +22,13 @@ export class FinancialPeriodReportsController implements Controller {
         }
       }
       const { typeReport, operation, initialDate, finalDate } = httpRequest.body
-      if (operation !== (OperationType.CREDIT || OperationType.DEBIT)) {
-        return badRequest(new InvalidParamError('type-operation'))
-      }
 
       if (!this.dateValidator.isValid(initialDate) || !this.dateValidator.isValid(finalDate)) {
         return badRequest(new InvalidParamError('periodDate'))
+      }
+
+      if (operation !== OperationType.CREDIT && operation !== OperationType.DEBIT) {
+        return badRequest(new InvalidParamError('type-operation'))
       }
 
       switch (typeReport) {
