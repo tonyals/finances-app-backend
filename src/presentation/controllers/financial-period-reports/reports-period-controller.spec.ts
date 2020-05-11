@@ -137,6 +137,6 @@ describe('ReportsController', () => {
         finalDate: 'any-date'
       }
     })
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('initialDate')))
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('periodDate')))
   })
 })
