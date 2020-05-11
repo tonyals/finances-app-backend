@@ -1,8 +1,8 @@
 import { FinancialPeriodReportsController } from './reports-period-controller'
-import { badRequest } from '../../helpers/http-helper'
+import { badRequest, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { SumModel } from '../../../domain/models/sum-model'
-import { OperationType } from '../../../domain/models/operation-enum'
+import { OperationType, ReportsPeriod } from '../../../domain/models/operation-enum'
 import { SumPeriodOperation, Period } from '../../../domain/usecases/sum-period'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { DateValidator } from '../../protocols/date-validator'
@@ -159,11 +159,27 @@ describe('ReportsController', () => {
     const httpResponse = await sut.handle({
       body: {
         typeReport: 'invalid-type-report',
-        operation: 'CREDIT',
+        operation: OperationType.CREDIT,
         initialDate: 'any-date',
         finalDate: 'any-date'
       }
     })
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('invalid-type-report')))
+  })
+
+  test('should return 500 if sumPeriodOperation throws', async () => {
+    const { sut, sumPeriodStub } = makeSut()
+    jest.spyOn(sumPeriodStub, 'sumPeriodOperation').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpResponse = await sut.handle({
+      body: {
+        typeReport: ReportsPeriod.SUMPERIOD,
+        operation: OperationType.CREDIT,
+        initialDate: 'any-date',
+        finalDate: 'any-date'
+      }
+    })
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
