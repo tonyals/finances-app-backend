@@ -5,10 +5,21 @@ import { SumModel } from '../../../domain/models/sum-model'
 import { OperationType } from '../../../domain/models/operation-enum'
 import { SumPeriodOperation, Period } from '../../../domain/usecases/sum-period'
 import { InvalidParamError } from '../../errors/invalid-param'
+import { DateValidator } from '../../protocols/date-validator'
+
+const makeDateValidator = (): DateValidator => {
+  class DateValidatorStub implements DateValidator {
+    isValid (date: string): boolean {
+      return true
+    }
+  }
+  return new DateValidatorStub()
+}
 
 interface SutTypes {
   sut: FinancialPeriodReportsController
   sumPeriodStub: SumPeriodOperation
+  dateValidatorStub: DateValidator
 }
 
 const makeSumPeriodOperation = (): SumPeriodOperation => {
@@ -48,8 +59,9 @@ const makeSumPeriodOperation = (): SumPeriodOperation => {
 
 const makeSut = (): SutTypes => {
   const sumPeriodStub = makeSumPeriodOperation()
-  const sut = new FinancialPeriodReportsController(sumPeriodStub)
-  return { sut, sumPeriodStub }
+  const dateValidatorStub = makeDateValidator()
+  const sut = new FinancialPeriodReportsController(sumPeriodStub, dateValidatorStub)
+  return { sut, sumPeriodStub, dateValidatorStub }
 }
 
 describe('ReportsController', () => {
@@ -58,7 +70,7 @@ describe('ReportsController', () => {
     const httpResponse = await sut.handle({
       body: {
         operation: 'any-operation',
-        initialDate: 'any-date',
+        initialDate: 'CREDIT',
         finalDate: 'any-date'
       }
     })
@@ -70,7 +82,7 @@ describe('ReportsController', () => {
     const httpResponse = await sut.handle({
       body: {
         typeReport: 'type-report',
-        initialDate: 'any-date',
+        initialDate: 'CREDIT',
         finalDate: 'any-date'
       }
     })
@@ -82,7 +94,7 @@ describe('ReportsController', () => {
     const httpResponse = await sut.handle({
       body: {
         typeReport: 'type-report',
-        operation: 'any-type',
+        operation: 'CREDIT',
         finalDate: 'any-date'
       }
     })
@@ -94,7 +106,7 @@ describe('ReportsController', () => {
     const httpResponse = await sut.handle({
       body: {
         typeReport: 'type-report',
-        operation: 'any-type',
+        operation: 'CREDIT',
         initialDate: 'any-date'
       }
     })
@@ -112,5 +124,19 @@ describe('ReportsController', () => {
       }
     })
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('type-operation')))
+  })
+
+  test('should return 400 if invalid initialDate is provided', async () => {
+    const { sut, dateValidatorStub } = makeSut()
+    jest.spyOn(dateValidatorStub, 'isValid').mockReturnValueOnce(false)
+    const httpResponse = await sut.handle({
+      body: {
+        typeReport: 'type-report',
+        operation: 'CREDIT',
+        initialDate: 'invalid-date',
+        finalDate: 'any-date'
+      }
+    })
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('initialDate')))
   })
 })
