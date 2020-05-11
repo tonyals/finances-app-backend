@@ -89,6 +89,18 @@ describe('ReportsController', () => {
     expect(httpResponse).toEqual(badRequest(new MissingParamError('initialDate')))
   })
 
+  test('should return 400 if no finalDate is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({
+      body: {
+        typeReport: 'type-report',
+        operation: 'any-type',
+        initialDate: 'any-date'
+      }
+    })
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('finalDate')))
+  })
+
   test('should return 400 if invalid type operation is provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle({
