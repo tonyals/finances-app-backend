@@ -12,14 +12,14 @@ describe('Operation route', () => {
     await Operation.create({
       type: OperationType.DEBIT,
       amount: 2.85,
-      date: new Date(),
+      date: new Date('2020-05-10T00:00:00-03:00'),
       description: 'any_description'
     }).save()
 
     await Operation.create({
       type: OperationType.CREDIT,
       amount: 3.5,
-      date: new Date(),
+      date: new Date('2020-05-10T00:00:00-03:00'),
       description: 'any_description'
     }).save()
   })
@@ -41,6 +41,7 @@ describe('Operation route', () => {
             {
               id: 1,
               type: 'DEBIT',
+              date: '2020-05-10',
               description: 'any_description',
               amount: 2.85
             }
@@ -62,6 +63,7 @@ describe('Operation route', () => {
             {
               id: 2,
               type: 'CREDIT',
+              date: '2020-05-10',
               description: 'any_description',
               amount: 3.5
             }
