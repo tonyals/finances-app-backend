@@ -41,7 +41,7 @@ export class FinancialPeriodReportsController implements Controller {
           return success(sumPeriod)
         }
         default:
-          return badRequest(new InvalidParamError('report-type'))
+          return badRequest(new InvalidParamError('invalid-type-report'))
       }
     } catch (error) {
       return serverError(error)
