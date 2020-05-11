@@ -17,6 +17,9 @@ export class FinancialPeriodReportsController implements Controller {
       if (!typeReport) {
         return badRequest(new MissingParamError('type-report'))
       }
+      if (!operation) {
+        return badRequest(new MissingParamError('type-operation'))
+      }
       switch (typeReport) {
         case ReportsPeriod.SUMPERIOD: {
           const sumPeriod = await this.sumPeriod
