@@ -4,11 +4,33 @@ import { OperationType } from '../../../../domain/models/reports-models/operatio
 import { SumModel } from '../../../../domain/models/reports-models/sum-model'
 import { FinancialResultRepository } from '../../usecases/reports-all/financial-result-repository'
 import { FinancialResultModel } from '../../../../domain/models/reports-models/financial-result-model'
+import { GetAllOperationRepository } from '../../usecases/reports-all/get-all-operations-repository'
+import { GetAllModel } from '../../../../domain/models/reports-models/get-all-model'
 
 interface SutTypes {
   sut: DbFinancialReportsOperation
   financialResultRepositoryStub: FinancialResultRepository
   sumAllOpRepositoryStub: SumAllOperationRepository
+  getAllOpRepositoryStub: GetAllOperationRepository
+}
+
+const makeGetAllOperationRepository = (): GetAllOperationRepository => {
+  class SumAllOperationRepositoryStub implements GetAllOperationRepository {
+    async getAllOperationRepository (): Promise<GetAllModel> {
+      return new Promise(resolve => resolve({
+        operation: [
+          {
+            id: 1,
+            type: OperationType.CREDIT,
+            date: new Date('2020-05-10'),
+            description: 'any_description',
+            amount: 2
+          }
+        ]
+      }))
+    }
+  }
+  return new SumAllOperationRepositoryStub()
 }
 
 const makeSumAllOperationRepository = (): SumAllOperationRepository => {
@@ -45,12 +67,18 @@ const makeFinancialResultRepository = (): FinancialResultRepository => {
 
 const makeSut = (): SutTypes => {
   const sumAllOpRepositoryStub = makeSumAllOperationRepository()
+  const getAllOpRepositoryStub = makeGetAllOperationRepository()
   const financialResultRepositoryStub = makeFinancialResultRepository()
-  const sut = new DbFinancialReportsOperation(sumAllOpRepositoryStub, financialResultRepositoryStub)
+  const sut = new DbFinancialReportsOperation(
+    sumAllOpRepositoryStub,
+    financialResultRepositoryStub,
+    getAllOpRepositoryStub
+  )
   return {
     sut,
     sumAllOpRepositoryStub,
-    financialResultRepositoryStub
+    financialResultRepositoryStub,
+    getAllOpRepositoryStub
   }
 }
 
@@ -118,6 +146,15 @@ describe('DbFinancialReports', () => {
         sumCredits: 50,
         result: 25
       })
+    })
+  })
+
+  describe('Get All operations', () => {
+    test('should call get all operation', async () => {
+      const { sut, getAllOpRepositoryStub } = makeSut()
+      const getAllResultSpy = jest.spyOn(getAllOpRepositoryStub, 'getAllOperationRepository')
+      await sut.getAllOperation()
+      expect(getAllResultSpy).toHaveBeenCalled()
     })
   })
 })
