@@ -5,6 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "NODE_ENV=development ts-node src/main/server.ts",
+    "prod": "NODE_ENV=production node dist/src/main/server.js",
+    "build": "rimraf dist && tsc",
     "test": "NODE_ENV=development jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "NODE_ENV=development jest --passWithNoTests --runInBand",
     "test:unit": "NODE_ENV=development yarn test jest --watch -c jest-unit-config.js",
@@ -42,6 +44,7 @@
     "jest": "^25.1.0",
     "lint-staged": "^10.0.7",
     "mockdate": "^2.0.5",
+    "rimraf": "^3.0.2",
     "sqlite3": "^4.2.0",
     "sucrase": "^3.13.0",
     "supertest": "^4.0.2",

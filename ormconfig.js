@@ -4,13 +4,13 @@ module.exports = [
     type: 'postgres',
     host: process.env.TYPEORM_HOST || 'localhost',
     username: process.env.TYPEORM_USERNAME || 'postgres',
-    password: process.env.TYPEORM_PASSWORD || 'docker',
+    password: process.env.TYPEORM_PASSWORD || '05481202',
     database: process.env.TYPEORM_DATABASE || 'finances-prod',
     synchronize: true,
     dropSchema: false,
     logging: false,
     entities: [
-      'dist/src/infra/db/entities/**/*.js'
+      'dist/src/infra/db/postgres/entities/**/*.js'
     ],
     migrations: [
       'dist/src/migration/**/*.js'
@@ -19,7 +19,7 @@ module.exports = [
       'dist/src/subscriber/**/*.js'
     ],
     cli: {
-      entitiesDir: 'dist/src/infra/db/entities',
+      entitiesDir: 'dist/src/infra/db/postgres/entities',
       migrationsDir: 'dist/src/migration',
       subscribersDir: 'dist/src/subscriber'
     }
