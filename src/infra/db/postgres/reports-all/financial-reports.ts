@@ -4,9 +4,11 @@ import { SumModel } from '../../../../domain/models/reports-models/sum-model'
 import { Operation } from '../entities/Operation'
 import { FinancialResultRepository } from '../../../../data/database/usecases/reports-all/financial-result-repository'
 import { FinancialResultModel } from '../../../../domain/models/reports-models/financial-result-model'
+import { GetAllOperationRepository } from '../../../../data/database/usecases/reports-all/get-all-operations-repository'
+import { GetAllModel } from '../../../../domain/models/reports-models/get-all-model'
 
 export class FinancialReportsPostgresRepository implements SumAllOperationRepository,
-  FinancialResultRepository {
+  FinancialResultRepository, GetAllOperationRepository {
   async sumAllOperationRepository (operationType: OperationType): Promise<SumModel> {
     const result = await Operation.find({
       select: ['id', 'type', 'description', 'amount', 'date'],
@@ -27,7 +29,14 @@ export class FinancialReportsPostgresRepository implements SumAllOperationReposi
     return operations
   }
 
-  //  Adicionar o método getAll
+  async getAllOperationRepository (): Promise<GetAllModel> {
+    const getAllOperations = await Operation.find()
+    const operations: GetAllModel = {
+      operation: getAllOperations
+    }
+    return operations
+  }
+
   async financialResultRepository (): Promise<FinancialResultModel> {
     const sumCredits = await this.sumAllOperationRepository(OperationType.CREDIT)
     const sumDebits = await this.sumAllOperationRepository(OperationType.DEBIT)
