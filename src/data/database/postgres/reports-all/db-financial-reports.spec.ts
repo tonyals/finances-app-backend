@@ -156,5 +156,21 @@ describe('DbFinancialReports', () => {
       await sut.getAllOperation()
       expect(getAllResultSpy).toHaveBeenCalled()
     })
+
+    test('should get all operations returns all operations', async () => {
+      const { sut } = makeSut()
+      const getAllResult = await sut.getAllOperation()
+      expect(getAllResult).toEqual({
+        operation: [
+          {
+            id: 1,
+            type: OperationType.CREDIT,
+            date: new Date('2020-05-10'),
+            description: 'any_description',
+            amount: 2
+          }
+        ]
+      })
+    })
   })
 })
