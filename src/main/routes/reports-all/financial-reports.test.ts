@@ -8,7 +8,6 @@ import { OperationType } from '../../../domain/models/reports-models/operation-e
 describe('Operation route', () => {
   beforeAll(async () => {
     await CreateConnectionPostgres.connect()
-
     await Operation.create({
       type: OperationType.DEBIT,
       amount: 2.85,
@@ -69,6 +68,34 @@ describe('Operation route', () => {
             }
           ],
           sum: 3.5
+        }
+      )
+  })
+
+  test('should return all operations on success', async () => {
+    await request(app)
+      .post('/api/reports')
+      .send({
+        type: 'GET-ALL'
+      })
+      .expect(
+        {
+          operation: [
+            {
+              id: 1,
+              type: 'DEBIT',
+              date: '2020-05-10',
+              description: 'any_description',
+              amount: 2.85
+            },
+            {
+              id: 2,
+              type: 'CREDIT',
+              date: '2020-05-10',
+              description: 'any_description',
+              amount: 3.5
+            }
+          ]
         }
       )
   })
