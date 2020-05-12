@@ -30,7 +30,9 @@ export class FinancialReportsPostgresRepository implements SumAllOperationReposi
   }
 
   async getAllOperationRepository (): Promise<GetAllModel> {
-    const getAllOperations = await Operation.find()
+    const getAllOperations = await Operation.find({
+      select: ['id', 'type', 'description', 'amount', 'date']
+    })
     const operations: GetAllModel = {
       operation: getAllOperations
     }

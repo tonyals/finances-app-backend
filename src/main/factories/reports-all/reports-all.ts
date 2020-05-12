@@ -7,7 +7,8 @@ export const makeReportsController = (): Controller => {
   const financialReportsRepository = new FinancialReportsPostgresRepository()
   const dbAllOperations = new DbFinancialReportsOperation(
     financialReportsRepository,
+    financialReportsRepository,
     financialReportsRepository
   )
-  return new FinancialReportsController(dbAllOperations, dbAllOperations)
+  return new FinancialReportsController(dbAllOperations, dbAllOperations, dbAllOperations)
 }
