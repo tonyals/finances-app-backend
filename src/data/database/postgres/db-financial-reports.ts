@@ -1,32 +1,20 @@
 import { SumAllOperation } from '../../../domain/usecases/sum-all-by-type'
-import { SumPeriodOperation, Period } from '../../../domain/usecases/sum-all-by-type-and-period'
 import { OperationType } from '../../../domain/models/operation-enum'
 import { SumModel } from '../../../domain/models/sum-model'
 import { SumAllOperationRepository } from '../usecases/sum-operations-by-type-repository'
 import { FinancialResultOperation } from '../../../domain/usecases/financial-result'
 import { FinancialResultModel } from '../../../domain/models/financial-result-model'
 import { FinancialResultRepository } from '../usecases/financial-result-repository'
-import { SumPeriodOperationRepository } from '../usecases/sum-by-type-period-repository'
 
-export class DbFinancialReportsOperation implements SumAllOperation, FinancialResultOperation,
-SumPeriodOperation {
+export class DbFinancialReportsOperation implements SumAllOperation, FinancialResultOperation {
   constructor (
     private readonly sumAllOpRepository: SumAllOperationRepository,
-    private readonly financialResultOpRepository: FinancialResultRepository,
-    private readonly sumPeriodOpRepository: SumPeriodOperationRepository
+    private readonly financialResultOpRepository: FinancialResultRepository
   ) {}
 
   async sumAllOperation (type: OperationType): Promise<SumModel> {
     const operation = await this.sumAllOpRepository.sumAllOperationRepository(type)
     return operation
-  }
-
-  async sumPeriodOperation (type: OperationType, period: Period): Promise<SumModel> {
-    const sumPeriod = await this.sumPeriodOpRepository.sumPeriodOperationRepository(type, {
-      initialDate: period.initialDate,
-      finalDate: period.finalDate
-    })
-    return sumPeriod
   }
 
   async financialResult (): Promise<FinancialResultModel> {

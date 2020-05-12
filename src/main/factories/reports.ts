@@ -5,10 +5,9 @@ import { FinancialReportsPostgresRepository } from '../../infra/db/postgres/repo
 
 export const makeReportsController = (): Controller => {
   const financialReportsRepository = new FinancialReportsPostgresRepository()
-  const dbOperations = new DbFinancialReportsOperation(
-    financialReportsRepository,
+  const dbAllOperations = new DbFinancialReportsOperation(
     financialReportsRepository,
     financialReportsRepository
   )
-  return new FinancialReportsController(dbOperations, dbOperations)
+  return new FinancialReportsController(dbAllOperations, dbAllOperations)
 }

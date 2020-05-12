@@ -53,16 +53,4 @@ describe('Financial Reports Repository', () => {
       expect(financialResult.result).toBe(0.10)
     })
   })
-
-  describe('Sum Period operation repository', () => {
-    test('should return an sum period result if success', async () => {
-      const sut = new FinancialReportsPostgresRepository()
-      const sumPeriodResult = await sut.sumPeriodOperationRepository(OperationType.CREDIT, {
-        initialDate: new Date('2020-05-05T00:00:00-03:00'),
-        finalDate: new Date('2020-05-05T00:00:00-03:00')
-      })
-      expect(sumPeriodResult).toBeTruthy()
-      expect(sumPeriodResult.sum).toBe(2.95)
-    })
-  })
 })
