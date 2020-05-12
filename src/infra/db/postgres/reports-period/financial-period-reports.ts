@@ -2,8 +2,8 @@ import { OperationType } from '../../../../domain/models/reports-models/operatio
 import { SumModel } from '../../../../domain/models/reports-models/sum-model'
 import { Operation } from '../entities/Operation'
 import { SumPeriodOperationRepository } from '../../../../data/database/usecases/reports-period/sum-by-type-period-repository'
-import { Period } from '../../../../domain/usecases/reports-period/sum-all-by-type-and-period'
 import { Between } from 'typeorm'
+import { Period } from '../../../../domain/models/reports-models/period-model'
 
 export class FinancialPeriodReportsPostgresRepository implements SumPeriodOperationRepository {
   async sumPeriodOperationRepository (operationType: OperationType, period: Period): Promise<SumModel> {

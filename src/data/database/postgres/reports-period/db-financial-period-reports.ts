@@ -1,7 +1,8 @@
-import { SumPeriodOperation, Period } from '../../../../domain/usecases/reports-period/sum-all-by-type-and-period'
+import { SumPeriodOperation } from '../../../../domain/usecases/reports-period/sum-all-by-type-and-period'
 import { OperationType } from '../../../../domain/models/reports-models/operation-enum'
 import { SumModel } from '../../../../domain/models/reports-models/sum-model'
 import { SumPeriodOperationRepository } from '../../usecases/reports-period/sum-by-type-period-repository'
+import { Period } from '../../../../domain/models/reports-models/period-model'
 
 export class DbFinancialPeriodReportsOperation implements SumPeriodOperation {
   constructor (

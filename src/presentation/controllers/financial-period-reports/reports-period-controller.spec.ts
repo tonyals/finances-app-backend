@@ -3,9 +3,10 @@ import { badRequest, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { SumModel } from '../../../domain/models/reports-models/sum-model'
 import { OperationType, ReportsPeriod } from '../../../domain/models/reports-models/operation-enum'
-import { SumPeriodOperation, Period } from '../../../domain/usecases/reports-period/sum-all-by-type-and-period'
+import { SumPeriodOperation } from '../../../domain/usecases/reports-period/sum-all-by-type-and-period'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { DateValidator } from '../../protocols/date-validator'
+import { Period } from '../../../domain/models/reports-models/period-model'
 
 const makeDateValidator = (): DateValidator => {
   class DateValidatorStub implements DateValidator {
