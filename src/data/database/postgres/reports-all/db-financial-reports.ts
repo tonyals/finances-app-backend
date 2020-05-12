@@ -23,8 +23,8 @@ GetAllOperation {
   }
 
   async getAllOperation (): Promise<GetAllModel> {
-    await this.getAllOpRepository.getAllOperationRepository()
-    return Promise.resolve(null)
+    const allOperations = await this.getAllOpRepository.getAllOperationRepository()
+    return allOperations
   }
 
   async financialResult (): Promise<FinancialResultModel> {
