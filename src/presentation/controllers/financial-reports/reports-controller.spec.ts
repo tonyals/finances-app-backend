@@ -7,11 +7,38 @@ import { OperationType } from '../../../domain/models/reports-models/operation-e
 import { InvalidParamError } from '../../errors/invalid-param'
 import { FinancialResultOperation } from '../../../domain/usecases/reports-all/financial-result'
 import { FinancialResultModel } from '../../../domain/models/reports-models/financial-result-model'
+import { GetAllOperation } from '../../../domain/usecases/reports-all/get-all-operations'
+import { GetAllModel } from '../../../domain/models/reports-models/get-all-model'
 
 interface SutTypes {
   sut: FinancialReportsController
   sumAllStub: SumAllOperation
+  getAllStub: GetAllOperation
   financialResultStub: FinancialResultOperation
+}
+
+const makeGetlAllOperation = (): GetAllOperation => {
+  class GetAllOperationStub implements GetAllOperation {
+    async getAllOperation (): Promise<GetAllModel> {
+      return new Promise(resolve => resolve({
+        operation: [
+          {
+            id: 1,
+            type: OperationType.CREDIT,
+            description: 'any_description',
+            amount: 2
+          },
+          {
+            id: 2,
+            type: OperationType.DEBIT,
+            description: 'any_description',
+            amount: 3
+          }
+        ]
+      }))
+    }
+  }
+  return new GetAllOperationStub()
 }
 
 const makeSumAllOperation = (): SumAllOperation => {
@@ -54,9 +81,10 @@ const makeFinancialResult = (): FinancialResultOperation => {
 
 const makeSut = (): SutTypes => {
   const sumAllStub = makeSumAllOperation()
+  const getAllStub = makeGetlAllOperation()
   const financialResultStub = makeFinancialResult()
-  const sut = new FinancialReportsController(sumAllStub, financialResultStub)
-  return { sut, sumAllStub, financialResultStub }
+  const sut = new FinancialReportsController(sumAllStub, financialResultStub, getAllStub)
+  return { sut, sumAllStub, financialResultStub, getAllStub }
 }
 
 describe('ReportsController', () => {
@@ -174,5 +202,30 @@ describe('ReportsController', () => {
       }
     })
     expect(financialResultSpy).toHaveBeenCalled()
+  })
+
+  test('should return all operations if success', async () => {
+    const { sut } = makeSut()
+    const getAll = await sut.handle({
+      body: {
+        type: OperationType.GETALLOPERATIONS
+      }
+    })
+    expect(getAll).toEqual(success({
+      operation: [
+        {
+          id: 1,
+          type: OperationType.CREDIT,
+          description: 'any_description',
+          amount: 2
+        },
+        {
+          id: 2,
+          type: OperationType.DEBIT,
+          description: 'any_description',
+          amount: 3
+        }
+      ]
+    }))
   })
 })
