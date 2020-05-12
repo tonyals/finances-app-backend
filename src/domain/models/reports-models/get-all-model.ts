@@ -1,6 +1,5 @@
 import { Operation } from './operation-model'
 
-export interface SumModel {
+export interface GetAllModel {
   operation: Operation[]
-  sum: number
 }
