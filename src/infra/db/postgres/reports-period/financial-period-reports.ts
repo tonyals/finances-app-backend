@@ -1,8 +1,8 @@
-import { OperationType } from '../../../../domain/models/operation-enum'
-import { SumModel } from '../../../../domain/models/sum-model'
+import { OperationType } from '../../../../domain/models/reports-models/operation-enum'
+import { SumModel } from '../../../../domain/models/reports-models/sum-model'
 import { Operation } from '../entities/Operation'
-import { SumPeriodOperationRepository } from '../../../../data/database/usecases/sum-by-type-period-repository'
-import { Period } from '../../../../domain/usecases/sum-all-by-type-and-period'
+import { SumPeriodOperationRepository } from '../../../../data/database/usecases/reports-period/sum-by-type-period-repository'
+import { Period } from '../../../../domain/usecases/reports-period/sum-all-by-type-and-period'
 import { Between } from 'typeorm'
 
 export class FinancialPeriodReportsPostgresRepository implements SumPeriodOperationRepository {

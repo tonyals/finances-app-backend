@@ -3,8 +3,8 @@ import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { EmailValidator } from '../../protocols/email-validator'
-import { AddAccount, AddAccountModel } from '../../../domain/usecases/add-account'
-import { AccountMondel } from '../../../domain/models/account-model'
+import { AddAccount, AddAccountModel } from '../../../domain/usecases/account/add-account'
+import { AccountMondel } from '../../../domain/models/account/account-model'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {

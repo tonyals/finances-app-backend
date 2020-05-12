@@ -1,9 +1,9 @@
 import { FinancialPeriodReportsController } from './reports-period-controller'
 import { badRequest, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
-import { SumModel } from '../../../domain/models/sum-model'
-import { OperationType, ReportsPeriod } from '../../../domain/models/operation-enum'
-import { SumPeriodOperation, Period } from '../../../domain/usecases/sum-all-by-type-and-period'
+import { SumModel } from '../../../domain/models/reports-models/sum-model'
+import { OperationType, ReportsPeriod } from '../../../domain/models/reports-models/operation-enum'
+import { SumPeriodOperation, Period } from '../../../domain/usecases/reports-period/sum-all-by-type-and-period'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { DateValidator } from '../../protocols/date-validator'
 

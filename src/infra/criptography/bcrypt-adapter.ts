@@ -1,4 +1,4 @@
-import { Encrypter } from '../../data/database/usecases/encrypter'
+import { Encrypter } from '../../data/database/usecases/account/encrypter'
 import bcrypt from 'bcrypt'
 
 export class BcryptAdapter implements Encrypter {

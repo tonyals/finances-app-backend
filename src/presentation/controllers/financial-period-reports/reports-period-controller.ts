@@ -2,9 +2,9 @@ import { Controller } from '../../protocols/controller'
 import { HttpResponse, HttpRequest } from '../../protocols/http'
 import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
-import { ReportsPeriod, OperationType } from '../../../domain/models/operation-enum'
+import { ReportsPeriod, OperationType } from '../../../domain/models/reports-models/operation-enum'
 import { InvalidParamError } from '../../errors/invalid-param'
-import { SumPeriodOperation } from '../../../domain/usecases/sum-all-by-type-and-period'
+import { SumPeriodOperation } from '../../../domain/usecases/reports-period/sum-all-by-type-and-period'
 import { DateValidator } from '../../protocols/date-validator'
 
 export class FinancialPeriodReportsController implements Controller {

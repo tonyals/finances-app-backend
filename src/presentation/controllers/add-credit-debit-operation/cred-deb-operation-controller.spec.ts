@@ -1,12 +1,12 @@
 import { OperationController } from './cred-deb-operation-controller'
 import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
-import { OperationCreditModel, OperationDebitModel } from '../../../domain/models/operation-model'
-import { AddCreditOperation, AddCreditOperationModel } from '../../../domain/usecases/add-credit-operation'
+import { OperationCreditModel, OperationDebitModel } from '../../../domain/models/credit-debit-operation/operation-model'
+import { AddCreditOperation, AddCreditOperationModel } from '../../../domain/usecases/credit-debit-operations/add-credit-operation'
 import MockDate from 'mockdate'
-import { AddDebitOperation, AddDebitOperationModel } from '../../../domain/usecases/add-debit-operation'
+import { AddDebitOperation, AddDebitOperationModel } from '../../../domain/usecases/credit-debit-operations/add-debit-operation'
 import { InvalidParamError } from '../../errors/invalid-param'
-import { OperationType } from '../../../domain/models/operation-enum'
+import { OperationType } from '../../../domain/models/reports-models/operation-enum'
 
 const makeAddCreditOperation = (): AddCreditOperation => {
   class AddCreditOperationStub implements AddCreditOperation {

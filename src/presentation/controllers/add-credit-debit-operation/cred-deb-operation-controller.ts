@@ -2,10 +2,10 @@ import { Controller } from '../../protocols/controller'
 import { HttpResponse, HttpRequest } from '../../protocols/http'
 import { MissingParamError } from '../../errors/missing-param'
 import { badRequest, success, serverError } from '../../helpers/http-helper'
-import { AddCreditOperation } from '../../../domain/usecases/add-credit-operation'
-import { AddDebitOperation } from '../../../domain/usecases/add-debit-operation'
+import { AddCreditOperation } from '../../../domain/usecases/credit-debit-operations/add-credit-operation'
+import { AddDebitOperation } from '../../../domain/usecases/credit-debit-operations/add-debit-operation'
 import { InvalidParamError } from '../../errors/invalid-param'
-import { OperationType } from '../../../domain/models/operation-enum'
+import { OperationType } from '../../../domain/models/reports-models/operation-enum'
 
 export class OperationController implements Controller {
   constructor (

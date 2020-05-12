@@ -1,12 +1,12 @@
 import { FinancialReportsController } from './reports-controller'
 import { badRequest, serverError, success } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
-import { SumAllOperation } from '../../../domain/usecases/sum-all-by-type'
-import { SumModel } from '../../../domain/models/sum-model'
-import { OperationType } from '../../../domain/models/operation-enum'
+import { SumAllOperation } from '../../../domain/usecases/reports-all/sum-all-by-type'
+import { SumModel } from '../../../domain/models/reports-models/sum-model'
+import { OperationType } from '../../../domain/models/reports-models/operation-enum'
 import { InvalidParamError } from '../../errors/invalid-param'
-import { FinancialResultOperation } from '../../../domain/usecases/financial-result'
-import { FinancialResultModel } from '../../../domain/models/financial-result-model'
+import { FinancialResultOperation } from '../../../domain/usecases/reports-all/financial-result'
+import { FinancialResultModel } from '../../../domain/models/reports-models/financial-result-model'
 
 interface SutTypes {
   sut: FinancialReportsController

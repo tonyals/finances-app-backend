@@ -2,10 +2,10 @@ import { Controller } from '../../protocols/controller'
 import { HttpResponse, HttpRequest } from '../../protocols/http'
 import { badRequest, success, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
-import { OperationType } from '../../../domain/models/operation-enum'
-import { SumAllOperation } from '../../../domain/usecases/sum-all-by-type'
+import { OperationType } from '../../../domain/models/reports-models/operation-enum'
+import { SumAllOperation } from '../../../domain/usecases/reports-all/sum-all-by-type'
 import { InvalidParamError } from '../../errors/invalid-param'
-import { FinancialResultOperation } from '../../../domain/usecases/financial-result'
+import { FinancialResultOperation } from '../../../domain/usecases/reports-all/financial-result'
 
 export class FinancialReportsController implements Controller {
   constructor (

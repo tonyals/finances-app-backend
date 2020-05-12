@@ -2,7 +2,7 @@ import { CreateConnectionPostgres } from '../helpers/postgres-connect-helper'
 import { Operation } from '../entities/Operation'
 import { getConnection } from 'typeorm'
 import { FinancialPeriodReportsPostgresRepository } from './financial-period-reports'
-import { OperationType } from '../../../../domain/models/operation-enum'
+import { OperationType } from '../../../../domain/models/reports-models/operation-enum'
 
 describe('Financial Period Reports Repository', () => {
   beforeAll(async () => {
