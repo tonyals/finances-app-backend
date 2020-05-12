@@ -3,7 +3,7 @@ import { badRequest, serverError } from '../../helpers/http-helper'
 import { MissingParamError } from '../../errors/missing-param'
 import { SumModel } from '../../../domain/models/sum-model'
 import { OperationType, ReportsPeriod } from '../../../domain/models/operation-enum'
-import { SumPeriodOperation, Period } from '../../../domain/usecases/sum-period'
+import { SumPeriodOperation, Period } from '../../../domain/usecases/sum-all-by-type-and-period'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { DateValidator } from '../../protocols/date-validator'
 

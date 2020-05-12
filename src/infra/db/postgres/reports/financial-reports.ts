@@ -1,11 +1,11 @@
-import { SumAllOperationRepository } from '../../../../data/database/usecases/sum-debits-repository'
+import { SumAllOperationRepository } from '../../../../data/database/usecases/sum-operations-by-type-repository'
 import { OperationType } from '../../../../domain/models/operation-enum'
 import { SumModel } from '../../../../domain/models/sum-model'
 import { Operation } from '../entities/Operation'
 import { FinancialResultRepository } from '../../../../data/database/usecases/financial-result-repository'
 import { FinancialResultModel } from '../../../../domain/models/financial-result-model'
-import { SumPeriodOperationRepository } from '../../../../data/database/usecases/sum-period-repository'
-import { Period } from '../../../../domain/usecases/sum-period'
+import { SumPeriodOperationRepository } from '../../../../data/database/usecases/sum-by-type-period-repository'
+import { Period } from '../../../../domain/usecases/sum-all-by-type-and-period'
 import { Between } from 'typeorm'
 
 export class FinancialReportsPostgresRepository implements SumAllOperationRepository,

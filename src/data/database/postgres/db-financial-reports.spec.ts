@@ -1,11 +1,11 @@
 import { DbFinancialReportsOperation } from './db-financial-reports'
-import { SumAllOperationRepository } from '../usecases/sum-debits-repository'
+import { SumAllOperationRepository } from '../usecases/sum-operations-by-type-repository'
 import { OperationType } from '../../../domain/models/operation-enum'
 import { SumModel } from '../../../domain/models/sum-model'
 import { FinancialResultRepository } from '../usecases/financial-result-repository'
 import { FinancialResultModel } from '../../../domain/models/financial-result-model'
-import { SumPeriodOperationRepository } from '../usecases/sum-period-repository'
-import { Period } from '../../../domain/usecases/sum-period'
+import { SumPeriodOperationRepository } from '../usecases/sum-by-type-period-repository'
+import { Period } from '../../../domain/usecases/sum-all-by-type-and-period'
 
 interface SutTypes {
   sut: DbFinancialReportsOperation

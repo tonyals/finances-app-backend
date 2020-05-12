@@ -1,12 +1,12 @@
-import { SumAllOperation } from '../../../domain/usecases/sum-all'
-import { SumPeriodOperation, Period } from '../../../domain/usecases/sum-period'
+import { SumAllOperation } from '../../../domain/usecases/sum-all-by-type'
+import { SumPeriodOperation, Period } from '../../../domain/usecases/sum-all-by-type-and-period'
 import { OperationType } from '../../../domain/models/operation-enum'
 import { SumModel } from '../../../domain/models/sum-model'
-import { SumAllOperationRepository } from '../usecases/sum-debits-repository'
+import { SumAllOperationRepository } from '../usecases/sum-operations-by-type-repository'
 import { FinancialResultOperation } from '../../../domain/usecases/financial-result'
 import { FinancialResultModel } from '../../../domain/models/financial-result-model'
 import { FinancialResultRepository } from '../usecases/financial-result-repository'
-import { SumPeriodOperationRepository } from '../usecases/sum-period-repository'
+import { SumPeriodOperationRepository } from '../usecases/sum-by-type-period-repository'
 
 export class DbFinancialReportsOperation implements SumAllOperation, FinancialResultOperation,
 SumPeriodOperation {
