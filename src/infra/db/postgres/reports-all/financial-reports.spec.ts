@@ -43,6 +43,7 @@ describe('Financial Reports Repository', () => {
       expect(operationCredit.sum).toBe(2.95)
     })
   })
+
   describe('Financial result operation repository', () => {
     test('should return an financial result if success', async () => {
       const sut = new FinancialReportsPostgresRepository()
@@ -51,6 +52,16 @@ describe('Financial Reports Repository', () => {
       expect(financialResult.sumCredits).toBe(2.95)
       expect(financialResult.sumDebits).toBe(2.85)
       expect(financialResult.result).toBe(0.10)
+    })
+  })
+
+  describe('Get all operation repository', () => {
+    test('should return all operations if success', async () => {
+      const sut = new FinancialReportsPostgresRepository()
+      const getAllResult = await sut.getAllOperationRepository()
+      expect(getAllResult).toBeTruthy()
+      expect(getAllResult.operation[0]).toBeTruthy()
+      expect(getAllResult.operation[1]).toBeTruthy()
     })
   })
 })
