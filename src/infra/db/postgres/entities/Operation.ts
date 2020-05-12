@@ -3,7 +3,8 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 export enum OperationType {
   DEBIT = 'DEBIT',
   CREDIT = 'CREDIT',
-  FINANCIALRESULT = 'FINANCIAL-RESULT'
+  FINANCIALRESULT = 'FINANCIAL-RESULT',
+  GETALLOPERATIONS = 'GET-ALL'
 }
 /// ColumnNumericTransformer
 export class ColumnNumericTransformer {

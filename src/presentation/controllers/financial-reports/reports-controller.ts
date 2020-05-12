@@ -6,11 +6,13 @@ import { OperationType } from '../../../domain/models/reports-models/operation-e
 import { SumAllOperation } from '../../../domain/usecases/reports-all/sum-all-by-type'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { FinancialResultOperation } from '../../../domain/usecases/reports-all/financial-result'
+import { GetAllOperation } from '../../../domain/usecases/reports-all/get-all-operations'
 
 export class FinancialReportsController implements Controller {
   constructor (
     private readonly sumAll: SumAllOperation,
-    private readonly financialResult: FinancialResultOperation
+    private readonly financialResult: FinancialResultOperation,
+    private readonly getAll: GetAllOperation
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -29,6 +31,10 @@ export class FinancialReportsController implements Controller {
           const creditOperation = await this.sumAll
             .sumAllOperation(OperationType.CREDIT)
           return success(creditOperation)
+        }
+        case OperationType.GETALLOPERATIONS: {
+          const allOperation = await this.getAll.getAllOperation()
+          return success(allOperation)
         }
         case OperationType.FINANCIALRESULT: {
           const financialResult = await this.financialResult
