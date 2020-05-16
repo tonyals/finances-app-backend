@@ -4,7 +4,7 @@ import { MissingParamError } from '../../errors/missing-param'
 import { InvalidParamError } from '../../errors/invalid-param'
 import { EmailValidator } from '../../protocols/email-validator'
 import { AddAccount, AddAccountModel } from '../../../domain/usecases/account/add-account'
-import { AccountMondel } from '../../../domain/models/account/account-model'
+import { AccountModel } from '../../../domain/models/account/account-model'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -17,7 +17,7 @@ const makeEmailValidator = (): EmailValidator => {
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
-    async addAccount (accountData: AddAccountModel): Promise<AccountMondel> {
+    async addAccount (accountData: AddAccountModel): Promise<AccountModel> {
       const fakeAccount = {
         id: 1,
         name: 'any_name',

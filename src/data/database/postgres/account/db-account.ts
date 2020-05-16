@@ -1,5 +1,5 @@
 import { AddAccount, AddAccountModel } from '../../../../domain/usecases/account/add-account'
-import { AccountMondel } from '../../../../domain/models/account/account-model'
+import { AccountModel } from '../../../../domain/models/account/account-model'
 import { AccountRepository } from '../../usecases/account/account-repository'
 import { Encrypter } from '../../usecases/account/encrypter'
 
@@ -9,7 +9,7 @@ export class DbAccount implements AddAccount {
     private readonly encrypt: Encrypter
   ) {}
 
-  async addAccount (accountData: AddAccountModel): Promise<AccountMondel> {
+  async addAccount (accountData: AddAccountModel): Promise<AccountModel> {
     const hashedPassword = await this.encrypt.encrypt(accountData.password)
     const { name, email } = accountData
     const account = await this.accountRepository.addAccountRepository({

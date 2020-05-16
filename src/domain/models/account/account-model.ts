@@ -1,4 +1,4 @@
-export interface AccountMondel {
+export interface AccountModel {
   id: number
   name: string
   email: string

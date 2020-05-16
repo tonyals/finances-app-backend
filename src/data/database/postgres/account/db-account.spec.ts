@@ -1,12 +1,12 @@
 import { DbAccount } from './db-account'
 import { AccountRepository } from '../../usecases/account/account-repository'
 import { AddAccountModel } from '../../../../domain/usecases/account/add-account'
-import { AccountMondel } from '../../../../domain/models/account/account-model'
+import { AccountModel } from '../../../../domain/models/account/account-model'
 import { Encrypter } from '../../usecases/account/encrypter'
 
 const makeAccountPostgresStub = (): AccountRepository => {
   class AccountPostgresRepositoryStub implements AccountRepository {
-    async addAccountRepository (accountData: AddAccountModel): Promise<AccountMondel> {
+    async addAccountRepository (accountData: AddAccountModel): Promise<AccountModel> {
       return new Promise(resolve => resolve({
         id: 1,
         name: 'any_name',

@@ -1,4 +1,4 @@
-import { AccountMondel } from '../../models/account/account-model'
+import { AccountModel } from '../../models/account/account-model'
 
 export interface AddAccountModel {
   name: string
@@ -7,5 +7,5 @@ export interface AddAccountModel {
 }
 
 export interface AddAccount {
-  addAccount (accountData: AddAccountModel): Promise<AccountMondel>
+  addAccount (accountData: AddAccountModel): Promise<AccountModel>
 }
